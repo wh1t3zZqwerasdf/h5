@@ -1,0 +1,156 @@
+<!-- 隐患列表历史记录 -->
+<template>
+  <van-list
+    class="background"
+    v-model:loading="loading"
+    :finished="finished"
+    finished-text="没有更多了"
+    @load="onLoad"
+  >
+    <div v-for="item in data?.rows">
+      <!-- <van-button @click="onItemClick(item)">点击</van-button> -->
+      <div class="line-item-record" @click="onItemClick(item)">
+        <van-row justify="space-between" class="line-item-relative">
+          <van-col span="6" class="line-title">隐患事件</van-col>
+          <van-col span="18" class="line-right">{{
+            DateUtils.DateFormat(item.updateTime, "yyyy-MM-dd")
+          }}</van-col>
+        </van-row>
+
+        <van-divider class="line-divider-height1-margin10"> </van-divider>
+
+        <van-row justify="space-between" class="line-item-relative">
+          <van-col span="6" class="line-title6">提报单位</van-col>
+          <van-col span="18" class="line-right">{{ item.submitOrg }}</van-col>
+        </van-row>
+
+        <van-row justify="space-between" class="line-item-relative">
+          <van-col span="12" class="line-title6">线路名称</van-col>
+          <van-col span="12" class="line-right">{{ item.name }}</van-col>
+        </van-row>
+
+        <van-row justify="space-between" class="line-item-relative">
+          <van-col span="6" class="line-title6">隐患类型</van-col>
+          <van-col span="18" class="line-right">{{ item.hiddenTroubleTypeName }}</van-col>
+        </van-row>
+
+        <van-row justify="space-between" class="line-item-relative">
+          <van-col span="5" class="line-title6">发现时间</van-col>
+          <van-col span="19" class="line-right">{{ DateUtils.DateFormat(item.discoverDate, "yyyy-MM-dd") }}</van-col>
+        </van-row>
+
+        <van-divider class="line-divider-height1-margin10"> </van-divider>
+
+        <van-row
+          justify="space-between"
+          class="line-item-relative"
+          style="margin-top: 20px"
+        >
+          <van-col span="8" class="line-content">{{ item.status_ }}</van-col>
+          <van-col
+            span="16"
+            class="line-right"
+            :style="setStatusColor(item.status)"
+            >{{ item.status_ }}</van-col
+          >
+        </van-row>
+      </div>
+    </div>
+  </van-list>
+</template>
+
+<script lang="ts" setup>
+import { ref } from "vue";
+import { useRouter } from "vue-router";
+import Api from "../../http/Api";
+import {
+  FinishActiviEntity,
+  FinishActivityList
+} from "../../types/ReportEntity";
+import { ApiResponse } from "../../http/request";
+import DateUtils from "../../utils/DateUtils";
+
+const currentPage = ref(1);
+const loading = ref(false);
+const finished = ref(false);
+
+const router = useRouter();
+function setStatusColor(status: number) {
+  let style = { color: "#FF9900" };
+  switch (status) {
+    case 4:
+      style.color = "#FF9900";
+      break;
+    case 7:
+      style.color = "#31B87A";
+      break;
+    case 8:
+      style.color = "#FF0000";
+      break;
+    default:
+      style.color = "#FF9900";
+      break;
+  }
+  return style;
+}
+
+function onItemClick(item: FinishActiviEntity) {
+  router.push({
+    path: "/hidLine",
+    query: {
+      id: item.id,
+      entity: JSON.stringify({
+        options: { isEdit: false }
+      })
+    }
+  });
+}
+
+const list = ref<Array<string>>([]);
+
+const data = ref<FinishActivityList>({
+  rows: [],
+  total: 0
+});
+
+function onLoad() {
+  const promise: Promise<ApiResponse<FinishActivityList>> =
+    Api.getHidFinishActivi(currentPage.value);
+  promise.then((result: ApiResponse<FinishActivityList>) => {
+    if (result.code != 200) {
+      loading.value = false;
+      finished.value = true;
+      return;
+    }
+    if (!data.value) {
+      data.value = result.data;
+    } else {
+      for (let row of result.data.rows) {
+        list.value.push(row.cityName + "111");
+        data.value?.rows.push(row);
+      }
+    }
+    // 加载状态结束
+    loading.value = false;
+    console.log(JSON.stringify(list.value));
+
+    // 数据全部加载完成
+    if (data.value.rows?.length >= result.data.total) {
+      finished.value = true;
+    } else {
+      currentPage.value++;
+    }
+  });
+}
+</script>
+
+<style>
+@import "../line-base/Line.css";
+.background {
+  width: 100%;
+  height: 100%;
+  background-color: #f2f3f5;
+  padding-top: 5px;
+  padding-bottom: 10px;
+}
+</style>

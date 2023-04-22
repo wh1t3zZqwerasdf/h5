@@ -1,0 +1,9 @@
+export * as system from './dict.api';
+export * as org from './organization.api';
+export * as structure from './structure.api';
+export * as users from './users.api';
+export * as logManage from './logManage.api';
+export * as permission from './permission.api';
+export * as auth from './auth.api';
+export * as news from './news.api';
+export * as hid from './hid.api';

@@ -1,0 +1,164 @@
+.bgc {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 188px;
+  background-image: url('@/assets/images/bgc-1.png');
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 5px;
+  position: relative;
+  margin-top: 50px;
+}
+
+.container .title {
+  width: 155px;
+  height: 25px;
+  font-size: 20px;
+  font-family: 微软雅黑;
+  color: #000000;
+  line-height: 25px;
+  font-weight: 700;
+}
+
+.icon {
+  width: 20px;
+  height: 18px;
+  margin-right: 14px;
+}
+
+.my-swipe {
+  width: auto;
+  height: 200px;
+  margin: 0 15px 0 15px;
+}
+
+.my-swipe img {
+  width: 330px;
+  height: 100%;
+}
+
+
+.my-swipe .van-swipe-item {
+  color: #fff;
+  font-size: 20px;
+  line-height: 150px;
+  text-align: center;
+  background-color: #39a9ed;
+  margin-top: 20px;
+}
+
+.notice-swipe {
+  height: 40px;
+  line-height: 40px;
+}
+
+.news-item {
+  width: 330px;
+  height: 38px;
+  display: flex;
+  align-items: center;
+  margin-bottom: 28px;
+  margin-left: 15px;
+  background-color: RGBA(225, 241, 254, 1);
+  border-radius: 0px 0px 10px 10px;
+}
+
+.news-image {
+  width: 60px;
+  height: 13px;
+  margin-right: 10px;
+  margin-left: 15px;
+}
+
+.news-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.news-span {
+  width: 1px;
+  height: 15px;
+  opacity: 0.3;
+  margin-right: 10px;
+}
+
+.news-text {
+  width: 224px;
+  height: 20px;
+  font-family: 微软雅黑;
+  text-align: left;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-left: -8px;
+  margin-top: 6px;
+  background-color: RGBA(225, 241, 254, 1);
+}
+
+
+.my-grid-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 64px;
+  /* height: 64px; */
+  font-size: 14px;
+  color: #333;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.my-grid-item img {
+  width: 64px;
+  height: 64px;
+}
+
+.my-grid-item span {
+  width: 56px;
+  height: 20px;
+  font-family: 微软雅黑;
+  font-weight: 700;
+}
+
+.today {
+  background-color: RGBA(243, 243, 243, 1);
+  padding: 10px 0;
+}
+
+.today-content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-left: 15px;
+}
+
+.today-content div {
+  width: 80px;
+  height: 28px;
+  font-size: 20px;
+  font-family: 微软雅黑;
+  font-weight: 700;
+  color: #000000;
+  line-height: 28px;
+}
+
+.gradient-span {
+  width: 72px;
+  height: 5px;
+  background: linear-gradient(270deg, #F3F3F3 0%, #0060FF 100%);
+}
+
+.box-card {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}

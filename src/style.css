@@ -1,0 +1,36 @@
+body {
+    margin: 0;
+    display: flex;
+    background-color: #f2f2f2;
+    /* font-family: 微软雅黑; */
+}
+
+
+#app {
+    width: 100%;
+    height: 100%;
+    padding: 0 auto;
+    margin: 0 auto;
+    /*text-align: center;*/
+}
+
+
+:root:root .van-dialog__message--has-title {
+  color:#000;
+  font-family: 微软雅黑;
+}
+
+:root:root .van-row{
+  flex-direction: column;
+}
+
+.process-card-btn-box{
+  width: 98px;
+  text-align: center;
+  line-height: 30px;
+  color: #f2f2f2;
+  background: #2793FF;
+  border-radius: 6px 6px 6px 6px;
+  opacity: 1;
+  z-index: 1;
+}
