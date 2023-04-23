@@ -19,7 +19,7 @@
       }}</span>
     </div>
     <div class="process-footer">
-      <div class="process-card-tag-box" v-if="dataSource.status">
+      <div v-if="dataSource.status">
         <van-tag size="large" :type="_statusTagDictMap[dataSource.status].type">{{
           _statusTagDictMap[dataSource.status].label }}
         </van-tag>
@@ -35,7 +35,7 @@ import { daytimeFormat } from '@/utils';
 import { watchEffect } from 'vue'
 
 watchEffect(() => {
-  console.log('dataSource.processStatus:', [props.dataSource.status]);
+  // console.log('dataSource.processStatus:', [props.dataSource.status]);
 });
 
 /* props */

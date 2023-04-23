@@ -1,18 +1,18 @@
 <template>
   <div style="width: 100%">
     <div
-      class="form-group-header content-header group-title p-0"
-      v-if="prop.label"
+        v-if="prop.label"
+        class="form-group-header content-header group-title p-0"
     >
       <div class="content-sub-title">{{ prop.label }}</div>
     </div>
     <template v-for="(item, index) in formDataList" :key="index">
       <FormBuild
-        class="array-card-item"
-        v-model="formDataList[index]"
-        :ref="setItemRef"
-        :formPropsGroup="getItemProps(itemProp)"
-        :formConfig="getItemConfig(item)"
+          :ref="setItemRef"
+          v-model="formDataList[index]"
+          :formConfig="getItemConfig(item)"
+          :formPropsGroup="getItemProps(itemProp)"
+          class="array-card-item"
       >
         <template #groupTitle="{ prop }">
           <span>{{ prop.title }}</span
@@ -30,15 +30,11 @@
 </template>
 
 <script lang="ts" setup>
-import { useEventBus } from '@/composables';
+import {useEventBus} from '@/composables';
 import FormBuild from '../../core/FormBuild.vue';
-import {
-  FormConfigType,
-  FormPropGroupType,
-  FormPropType,
-  OpStatus
-} from '@/types';
-import type { FormInstance } from 'element-plus';
+import {FormConfigType, FormPropGroupType, FormPropType, OpStatus} from '@/types';
+import type {FormInstance} from 'vant';
+
 const props = defineProps({
   // 双向绑定数据
   modelValue: {
@@ -71,7 +67,7 @@ const eventBus = useEventBus();
 
 const prop = computed(() => props.itemProp);
 const arrayCardConfig = computed(
-  () => prop.value?.arrayCardConfig || { addBtn: true }
+    () => prop.value?.arrayCardConfig || {addBtn: true}
 );
 
 const formDataList = computed<any>({
@@ -103,8 +99,8 @@ const getItemProps = (item: any) => {
 
 const addItem = () => {
   if (
-    arrayCardConfig.value?.max &&
-    formDataListLength.value >= arrayCardConfig.value.max
+      arrayCardConfig.value?.max &&
+      formDataListLength.value >= arrayCardConfig.value.max
   ) {
     // handleWarning(`最多只能添加${arrayCardConfig.value?.max}条`);
     return;
@@ -113,8 +109,8 @@ const addItem = () => {
 };
 const delItem = (index: number) => {
   if (
-    arrayCardConfig.value?.min &&
-    formDataListLength.value <= arrayCardConfig.value.min
+      arrayCardConfig.value?.min &&
+      formDataListLength.value <= arrayCardConfig.value.min
   ) {
     // handleWarning(`最少保留${arrayCardConfig.value?.min}条`);
     return;
@@ -132,14 +128,12 @@ const getItemConfig = (item: any) => {
 };
 
 const validateForm = async (formRef: FormInstance) => {
-  return await formRef.validate((valid: any, fields: any) => {
-    if (!valid) {
-      // TODO: 滚动到错误行，fields为对象，无序
-      return false;
-    } else {
-      return true;
-    }
-  });
+  try {
+    await formRef.validate()
+    return true
+  } catch (e) {
+    return false
+  }
 };
 
 const submitChildrenForm = async () => {
@@ -170,6 +164,6 @@ onUnmounted(() => {
 <style lang="less" scoped>
 .array-card-item {
   padding-bottom: 20px;
-  border-bottom: 1px solid var(--el-border-color);
+  border-bottom: 1px solid var(--hy-border-color);
 }
 </style>

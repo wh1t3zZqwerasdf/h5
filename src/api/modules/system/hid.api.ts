@@ -13,3 +13,30 @@ export function queryList(data: {
 		data,
 	});
 }
+
+/**
+ * 获取电站/线路列表
+ * @param page
+ * @param callback
+ */
+export function protectFacilityQueryList(data: {
+  page: number;
+  size: number;
+  [key: string]: any;
+},
+roles:"ROLE_ADMIN",
+) {
+  return http<ApiPage<any>>({
+    url: `${PREFIX}/protect/facility/query/list`,
+    method: 'post',
+    data:{  roles }
+  });
+}
+
+export function addData(data: any) {
+  return http({
+    url: `${PREFIX}/hid/submit`,
+    method: 'post',
+    data
+  })
+}

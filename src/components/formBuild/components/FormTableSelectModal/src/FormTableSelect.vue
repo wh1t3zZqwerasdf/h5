@@ -1,57 +1,27 @@
 <template>
   <template v-if="props.viewType === 'select'">
-    <el-select
-      v-model="selectIds"
-      multiple
-      collapse-tags
-      collapse-tags-tooltip
-      ref="SelectInputRef"
-      :placeholder="props.placeholder || '请选择'"
-      v-bind="props.viewComponentProps"
-      @click.stop="handleSelectInputClick"
-    >
-      <el-option
-        v-for="item in selectData"
-        :key="item[keyProps.valueKey]"
-        :label="item[keyProps.labelKey]"
-        :value="item[keyProps.valueKey]"
-      />
+    <el-select v-model="selectIds" multiple collapse-tags collapse-tags-tooltip ref="SelectInputRef"
+      :placeholder="props.placeholder || '请选择'" v-bind="props.viewComponentProps" @click.stop="handleSelectInputClick">
+      <el-option v-for="item in selectData" :key="item[keyProps.valueKey]" :label="item[keyProps.labelKey]"
+        :value="item[keyProps.valueKey]" />
     </el-select>
   </template>
   <!--表格选择-->
   <div class="w-full h-full" v-else>
-    <el-button
-      class="select-btn"
-      @click="handleSelectInputClick"
-      type="primary"
-      >{{ modalProps.title }}</el-button
-    >
+    <el-button class="select-btn" @click="handleSelectInputClick" type="primary">{{ modalProps.title }}</el-button>
     <div class="w-full h-full">
-      <MyTableNew
-        v-bind="props.viewComponentProps"
-        :tableProps="props.viewComponentProps?.tableProps"
-        :table-data="selectData"
-        :show-index-fn="showIndex"
-      >
+      <!-- <MyTableNew v-bind="props.viewComponentProps" :tableProps="props.viewComponentProps?.tableProps"
+        :table-data="selectData" :show-index-fn="showIndex">
         <template #operation="{ scope }">
-          <el-button
-            link
-            type="danger"
-            size="small"
-            @click="handleDeleteItem(scope.row)"
-          >
+          <el-button link type="danger" size="small" @click="handleDeleteItem(scope.row)">
             删除
           </el-button>
         </template>
-      </MyTableNew>
+      </MyTableNew> -->
     </div>
   </div>
-  <FormTableSelectModal
-    ref="FormTableSelectModalRef"
-    v-bind="props"
-    v-model="selectIds"
-    @initComp="initComp"
-  ></FormTableSelectModal>
+  <FormTableSelectModal ref="FormTableSelectModalRef" v-bind="props" v-model="selectIds" @initComp="initComp">
+  </FormTableSelectModal>
 </template>
 
 <script lang="ts" setup>
@@ -59,14 +29,14 @@ import { computed } from 'vue';
 import FormTableSelectModal from './components/FormTableSelectModal.vue';
 import { formTableSelectProps } from './props';
 import MyTableNew from '@/components/my/MyTableNew.vue';
-import { usePage } from '@/composables';
+// import { usePage } from '@/composables';
 
 const props = defineProps(formTableSelectProps);
 
 const emits = defineEmits(['update:modelValue', 'update:selectedData']);
 
 /* hook */
-const { showIndex } = usePage();
+// const { showIndex } = usePage();
 
 /* data */
 const selectIds = ref<any>([]);
@@ -100,7 +70,7 @@ const modelValue = computed({
   get() {
     return props.modelValue;
   },
-  set() {}
+  set() { }
 });
 
 /* methods */
@@ -156,7 +126,7 @@ onMounted(() => {
 });
 </script>
 
-<style lang="scss" scoped>
+<style lang="less" scoped>
 .select-btn {
   position: absolute;
   top: -36px;

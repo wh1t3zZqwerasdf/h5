@@ -1,39 +1,23 @@
 <template>
-  <van-field
-      v-model="_selectValueLabel"
-      :class="['form-item', `form-item-${prop.type}`]"
-      :label="!prop.hiddenLabel && prop.label"
-      :name="prop.name"
-      :placeholder="prop.placeholder || '请选择' "
-      :readonly="true"
-      :required="isRequired(prop, scopeData, config)"
-      :rules="prop.rules?.map((rule:any) => {
-          if (rule.required) {
-            rule.message = rule.message || `${prop.label}不能为空`;
-          }
-          return rule
-        })"
-      clearable
-      @click="show"
-  />
+  <van-field v-model="_selectValueLabel" :class="['form-item', `form-item-${prop.type}`]"
+    :label="!prop.hiddenLabel && prop.label" :name="prop.name" :placeholder="prop.placeholder || '请选择'" :readonly="true"
+    :required="isRequired(prop, scopeData, config)" :rules="prop.rules?.map((rule: any) => {
+        if (rule.required) {
+          rule.message = rule.message || `${prop.label}不能为空`;
+        }
+        return rule
+      })" clearable @click="show" />
   <van-popup v-model:show="showPicker" position="bottom" round>
-    <van-cascader
-        v-model="componentValue"
-        :field-names="_fieldNames"
-        :options="options"
-        :title="prop.label"
-        @change="onChange"
-        @close="hide"
-        @finish="onFinish"
-    />
+    <van-cascader v-model="componentValue" :field-names="_fieldNames" :options="options" :title="prop.label"
+      @change="onChange" @close="hide" @finish="onFinish" />
   </van-popup>
 </template>
 
 <script lang="ts" setup>
-import {useFormNew} from '@/composables'
-import {FormConfigType, FormPropType} from "@/types";
-import {CascaderOption} from 'vant'
-import {useSystemStore} from "@/store";
+import { useFormNew } from '@/composables'
+import { FormConfigType, FormPropType } from "@/types";
+import { CascaderOption } from 'vant'
+import { useSystemStore } from "@/store";
 
 const props = defineProps({
   modelValue: {
@@ -59,8 +43,8 @@ const emit = defineEmits<{
 }>();
 
 
-const {isDisabled, getOptions, isReadonly, isRequired, setFormConfig} =
-    useFormNew(props.config);
+const { isDisabled, getOptions, isReadonly, isRequired, setFormConfig } =
+  useFormNew(props.config);
 const systemStore = useSystemStore()
 
 const componentValue = computed<any>({
@@ -121,8 +105,8 @@ async function handleSelectCascadeApi(item: FormPropType) {
   if (item.cascadeOptions?.length) return; // 已请求
   if (item.apiFn === undefined) return;
   let params = Array.isArray(item.apiParams)
-      ? [...item.apiParams]
-      : [item.apiParams];
+    ? [...item.apiParams]
+    : [item.apiParams];
   if (typeof item.apiParams === "function")
     params = item.apiParams(componentValue.value);
 
@@ -139,13 +123,13 @@ async function handleSelectCascadeApi(item: FormPropType) {
 }
 
 const onChange = (value) => {
-  console.log(value);
-  if (value.selectedOptions[value.selectedOptions.length - 1].children.length === 0) {
-    delete value.selectedOptions[value.selectedOptions.length - 1].children
-  }
+  // console.log(value);
+  // if (value.selectedOptions[value.selectedOptions.length - 1].children.length === 0) {
+  //   delete value.selectedOptions[value.selectedOptions.length - 1].children
+  // }
 };
 
-const onFinish = ({selectedOptions}: { selectedOptions: CascaderOption[] }) => {
+const onFinish = ({ selectedOptions }: { selectedOptions: CascaderOption[] }) => {
   hide()
   emit('setCascaderArrName', selectedOptions.map(item => item[props.prop.apiProps?.label || defaultFieldNames.text]).join('/'))
   // fieldValue.value = selectedOptions.map((option) => option.text).join('/');

@@ -1,11 +1,11 @@
 import type {
-	BooleanAndFn,
-	FormConfigType,
-	FormOptionsType,
-	FormPropGroupType,
-	FormPropType,
-	SelectOptionType,
-	ValidateCbNameType,
+    BooleanAndFn,
+    FormConfigType,
+    FormOptionsType,
+    FormPropGroupType,
+    FormPropType,
+    SelectOptionType,
+    ValidateCbNameType,
 } from '@/types';
 import type {FormInstance} from 'vant';
 import Schema, {Rules, ValidateError} from 'async-validator';
@@ -63,15 +63,12 @@ export function useFormNew(config?: FormConfigType) {
         if (formEl) formInstance.value = formEl;
         // 先清除验证信息
         formEl.resetValidation();
-        return formEl.validate(undefined, (valid, fields) => {
-            if (!valid) {
-                // TODO: 滚动到错误行，fields为对象，无序
-                // scrollToField(fields![0].name, formEl);
-                return false;
-            } else {
-                return true;
-            }
-        });
+        try {
+            await formEl.validate()
+            return true
+        } catch (e) {
+            return false
+        }
     }
 
     /* 重置表单 */

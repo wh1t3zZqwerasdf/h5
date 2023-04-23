@@ -1,26 +1,13 @@
 <template>
   <span></span>
-  <el-dialog
-    v-model="dialogVisible"
-    top="5vh"
-    :width="modalProps.width"
-    destroy-on-close
-    @close="handleCancelSelect"
-  >
+  <el-dialog v-model="dialogVisible" top="5vh" :width="modalProps.width" destroy-on-close @close="handleCancelSelect">
     <div class="table-dialog-body" :style="modalProps.dialogBodyStyle">
       <div class="inline-block w-4/12" v-if="multiple">
-        <SelectDataList
-          :keyProps="keyProps"
-          :dataSource="selectData"
-          @deleteItem="handleDeleteItem"
-        ></SelectDataList>
+        <SelectDataList :keyProps="keyProps" :dataSource="selectData" @deleteItem="handleDeleteItem"></SelectDataList>
       </div>
       <div class="inline-block" :class="multiple ? 'w-8/12' : 'w-12/12'">
-        <SearchTableByClass
-          v-model:selectedDataIds="selectIds"
-          v-model:selectedData="selectData"
-          v-bind="searchTableByDepProps"
-        ></SearchTableByClass>
+        <SearchTableByClass v-model:selectedDataIds="selectIds" v-model:selectedData="selectData"
+          v-bind="searchTableByDepProps"></SearchTableByClass>
       </div>
     </div>
 
@@ -131,7 +118,7 @@ onMounted(async () => {
 defineExpose({ openDialog });
 </script>
 
-<style lang="scss" scoped>
+<style lang="less" scoped>
 .table-dialog-body {
   display: flex;
   overflow-y: hidden;

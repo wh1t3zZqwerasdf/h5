@@ -7,7 +7,7 @@
             <ProcessCard :tableProps="tableProps" :dataSource="item">
               <template #footer>
                 <div class="card-btns">
-                  <slot name="cardBtnRight" :data="item">
+                  <slot name="cardBtn" :data="item">
                   </slot>
                 </div>
               </template>

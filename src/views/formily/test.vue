@@ -1,5 +1,9 @@
 <template>
-  <FormBuild v-model="formData" :form-props-group="dialogPropsData" :formConfig="{ op: op }"></FormBuild>
+  <FormBuild ref="formBuildRef" v-model="formData" :form-props-group="dialogPropsData"
+             :formConfig="{ op: op }"></FormBuild>
+  <van-button block native-type="submit" round type="primary" @click="onSubmit">
+    提交
+  </van-button>
 </template>
 
 <script lang="ts" setup>
@@ -12,6 +16,7 @@ import {useSystemStore} from '@/store';
 const systemStore = useSystemStore()
 const formData = reactive({})
 const op = ref('add')
+const formBuildRef = ref()
 console.log(systemStore.dict);
 const dialogProps = reactive<FormPropType[]>([
   {
@@ -167,17 +172,6 @@ const dialogProps = reactive<FormPropType[]>([
     // optionCbFn: (data, option) => {}
   },
   {
-    name: 'hierarchyType',
-    label: '隶属于机构',
-    type: 'select',
-    options: (data, op) => {
-      return systemStore.dict.hierarchy_type;
-    },
-    disabled: true,
-    required: true,
-    rules: [{required: true}]
-  },
-  {
     name: 'arrayUserTask',
     label: '',
     hiddenLabel: true,
@@ -226,9 +220,14 @@ const setApiData = () => {
     formData.selectApi = '2'
     formData.hiddenTroubleType = "85708563472731137"
     formData.hiddenTroubleTypeArrName = 'xxx/xx/xx'
-    formData.arrayUserTask = [{arrayText: '32432'}]
+    formData.arrayUserTask = [{arrayText: ''}, {}]
     // op.value = 'view'
   }, 2000)
+}
+
+async function onSubmit() {
+  const res = await formBuildRef.value.onSubmit()
+  console.log(formData);
 }
 
 watch(formData, val => {

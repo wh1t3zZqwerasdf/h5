@@ -1,0 +1,73 @@
+:root {
+    /* 顶部导航栏渐变背景色 */
+    --hy-nav-bgImgColor: linear-gradient(#0a83ff, #13b6ff);
+    /*------------- 颜色 --------------*/
+    /* 主题色 */
+    --hy-primary-color: #0f59aa;
+    --hy-primary-light-color: #2c75c5;
+    --hy-primary-light2-color: #4283cb;
+
+
+    /* 页面灰色底色 */
+    --hy-page-bg-color: #f5f5f5;
+    /* 全局边框颜色 */
+    --hy-border-color: #e5e7eb;
+    /* 全局阴影颜色 */
+    --hy-box-shadow-color: #0000001f;
+    /* 全局阴影样式 */
+    --hy-box-shadow: 0 0 8px var(--hy-box-shadow-color);
+    /* 全局默认字体颜色 */
+    --hy-text-color: #7e7e7e;
+    /* 标题字体颜色 */
+    --hy-title-text-color: #333;
+    /* 浅灰色提示性字体颜色 */
+    --hy-placeholder-text-color: #999;
+    /* 副标题字体颜色 */
+    --hy-sub-title-text-color: #8D8D8D;
+
+    /*-------------- 字体 --------------*/
+    /* 主标题文字大小 */
+    --hy-title-text-size: 22px;
+    /* 副标题文字大小 */
+    --hy-subtitle-text-size: 15px;
+    /* 菜单文字大小 */
+    --hy-menus-text-size: 18px;
+    /* 全局默认box内边距 */
+    --hy-box-space: 12px;
+    /* 大号按钮字体大小 */
+    --hy-large-button-text-size: 20px;
+    /* XS 文字大小 */
+    --hy-xs-text-size: 12px;
+    /* S 文字大小 */
+    --hy-small-text-size: 14px;
+    /* M 文字大小 */
+    --hy-medium-text-size: 16px;
+    /* L 文字大小 */
+    --hy-large-text-size: 18px;
+    /* L 数字文字大小 */
+    --hy-large-number-text-size: 22px;
+
+
+    /*-------------- 边距 --------------*/
+    /* S 内边距 */
+    --hy-small-padding: 12px;
+    /* M 内边距 */
+    --hy-medium-padding: 15px;
+
+
+    /*-------------- 步骤条 --------------*/
+    --hy-step-item-title-size: 18px;
+    --hy-step-item-subTitle-size: 15px;
+
+    /*-------------- 系统头部高度 --------------*/
+    --hy-page-height: calc(100vh - 150px);
+}
+
+/* 覆盖el */
+:root {
+
+    /*--el-color-success: #67C23A;*/
+    /*--el-color-warning: #E6A23C;*/
+    /*--el-color-danger: #F56C6C;*/
+    /*--el-color-primary: #409eff;*/
+}

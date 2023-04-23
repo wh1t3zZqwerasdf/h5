@@ -50,9 +50,13 @@ function onLoad() {
   if (loading.value) {
     return
   }
-  pageNo.value++;
-  loading.value = true;
-  loadList();
+
+
+  if (pageNo.value < 10) {
+    pageNo.value++;
+    loading.value = true;
+    loadList();
+  }
 }
 
 function loadList() {

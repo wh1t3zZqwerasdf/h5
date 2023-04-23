@@ -3,12 +3,7 @@
     <div class="select-data-group">
       <p class="select-data-group-title mb-10px">已选择:</p>
       <template v-for="tag in dataSource" :key="tag[keyProps.valueKey]">
-        <el-tag
-          class="mx-1 mb-8px"
-          closable
-          type="info"
-          @close="deleteData(tag)"
-        >
+        <el-tag class="mx-1 mb-8px" closable type="info" @close="deleteData(tag)">
           {{ tag[keyProps.labelKey] }}
         </el-tag>
       </template>
@@ -40,10 +35,10 @@ const deleteData = (item: any) => {
   emits('deleteItem', item[keyProps.value?.valueKey]);
 };
 
-onMounted(() => {});
+onMounted(() => { });
 </script>
 
-<style lang="scss" scoped>
+<style lang="less" scoped>
 .select-data {
   margin-right: 10px;
   height: 100%;

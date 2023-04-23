@@ -1,5 +1,5 @@
 <template>
-  <van-col v-show="prop.type !== 'hidden'" v-bind="layoutProps">
+  <van-col v-show="prop.type !== 'hidden'" class="form-item-col" v-bind="layoutProps">
     <!--    文本输入-->
     <van-field
         v-if="['text', 'password', 'textarea'].includes(prop.type)"
@@ -685,4 +685,15 @@ onMounted(() => {
 });
 </script>
 
-<style lang="less" scoped></style>
+<style lang="less" scoped>
+.form-item-col {
+  border-bottom: 1px solid var(--hy-border-color);
+
+  :deep(.van-cell) {
+    label {
+      font-size: var(--hy-xs-text-size);
+      color: var(--hy-placeholder-text-color);
+    }
+  }
+}
+</style>

@@ -50,9 +50,9 @@ export default {
         { icon: icon4, text: '执法仪管理' },
       ],
       moreNews: [
-        { id: 'internal', icon: icon1, text: '隐患列表', path: '' },
-        { id: 'external', icon: icon1, text: '隐患新增', path: '' },
-        { id: 'subordinate', icon: icon1, text: '隐患查询', path: '' },
+        // { id: 'internal', icon: icon1, text: '隐患列表', path: '' },
+        { id: 'external', icon: icon1, text: '隐患新增', path: '/troubleListAdd' },
+        { id: 'subordinate', icon: icon1, text: '隐患查询', path: '/troubleList' },
         { id: 'edit', icon: icon1, text: '草稿箱', path: '' },
       ],
     }

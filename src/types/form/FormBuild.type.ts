@@ -9,7 +9,7 @@ export type UploadType = {
     type: string;
     url: string;
 };
-type PropType =
+export type PropType =
     | 'text' // 文本框
     | 'textarea' // 多行文本框
     | 'password' // 密码框

@@ -94,6 +94,7 @@ const onSubmit = async () => {
     // TODO暂用定时器解决
     setTimeout(() => {
       const result = formVerifyRes.every(item => item);
+      console.log(result);
       formVerifyRes.length = 0;
       resolve(result);
     }, 200);
@@ -132,13 +133,6 @@ defineExpose({onSubmit, getFormRef, clearValidForm});
             :key="index"
             class="my-form-group content-dialog form-group-box"
         >
-          <div
-              v-if="list.title"
-              class="form-group-header content-header group-title"
-          >
-            <!-- title 上的按钮功能组 -->
-            <slot name="btnGroup"></slot>
-          </div>
           <van-cell-group :title="list.title" inset>
             <van-row :gutter="20" class="form-row">
               <FormItem
@@ -161,6 +155,10 @@ defineExpose({onSubmit, getFormRef, clearValidForm});
   </van-form>
 </template>
 <style lang="less" scoped>
-
+.form-box {
+  :deep(.van-cell-group) {
+    margin: 0;
+  }
+}
 
 </style>
