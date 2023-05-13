@@ -1,7 +1,7 @@
 import { PropType } from 'vue';
 import { FormConfigType, FormPropType } from '@/types';
-import type { TreeProps } from '@/components/tree/src/typing';
-import type { SearchTableProps } from '@/components/searchTable/src/typing';
+// import type { TreeProps } from '@/components/tree/src/typing';
+// import type { SearchTableProps } from '@/components/searchTable/src/typing';
 import type { KeyProps, ModalProps } from './typing';
 
 export const formTableSelectProps = {
@@ -24,10 +24,10 @@ export const formTableSelectProps = {
     default: () => {}
   },
   treeProps: {
-    type: Object as PropType<TreeProps>
+    // type: Object as PropType<TreeProps>
   },
   searchTableProps: {
-    type: Object as PropType<SearchTableProps>,
+    // type: Object as PropType<SearchTableProps>,
     required: true
   },
   defaultValueLoad: {
@@ -89,10 +89,10 @@ export const formTableSelectModalProps = {
     type: Object as PropType<FormConfigType>
   },
   treeProps: {
-    type: Object as PropType<TreeProps>
+    // type: Object as PropType<TreeProps>
   },
   searchTableProps: {
-    type: Object as PropType<SearchTableProps>,
+    // type: Object as PropType<SearchTableProps>,
     required: true
   },
   defaultValueLoad: {

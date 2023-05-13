@@ -13,6 +13,7 @@
 
 <script lang="ts" setup>
 import {FormConfigType, FormPropType} from '@/types';
+import {useCustomFieldValue} from '@vant/use';
 
 const props = defineProps({
   modelValue: {
@@ -53,13 +54,14 @@ const componentValue = computed<any>({
     return props.modelValue;
   },
   set(data) {
-    // 异步触发自定义字段的表单校验
     setTimeout(() => {
-      props.formRef?.validateField(props.itemProp?.name);
+      props.formRef?.resetValidation(props.itemProp?.name);
     }, 50);
+    // 异步触发自定义字段的表单校验
     emit('update:modelValue', data);
   }
 });
+useCustomFieldValue(() => componentValue.value)
 
 onMounted(() => {
 });

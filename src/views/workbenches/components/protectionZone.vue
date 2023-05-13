@@ -12,23 +12,23 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import icon1 from '@/assets/images/desk/protectionZone-35.png'
 import icon2 from '@/assets/images/desk/protectionZone-36.png'
 import icon3 from '@/assets/images/desk/InspectorInspection-37.png'
 
 export default {
-  data () {
+  data() {
     return {
       icons: [
         { icon: icon1, text: '保护区查询' },
         { icon: icon2, text: '保护区划定' },
-        { icon: icon3, text: '保护区督察检查' },
+        { icon: icon3, text: '保护区检查' },
       ]
     }
   },
   methods: {
-    goToDetailPage (item) {
+    goToDetailPage(item: any) {
       // this.$router.push({ path: '/detail', query: { id: item.id } })
       console.log(item);
     }

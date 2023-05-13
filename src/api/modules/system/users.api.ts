@@ -1,4 +1,4 @@
-import type { ApiPage, UserInfoType } from '@/types';
+// import type { ApiPage } from '@/types';
 import { API_URL, http } from '@/utils/request';
 
 const PREFIX = `${API_URL.ADMIN}/system/users`;
@@ -37,7 +37,7 @@ export function usersUpdate(data: any) {
 }
 
 export function usersFilter(data: any) {
-  return http<ApiPage<UserInfoType>>({
+  return http({
     url: `${PREFIX}/query/list`,
     method: 'post',
     data
@@ -45,7 +45,7 @@ export function usersFilter(data: any) {
 }
 
 export function queryDispenseUser(data: any) {
-  return http<ApiPage<UserInfoType>>({
+  return http({
     url: `${PREFIX}/query/dispense/list`,
     method: 'post',
     data
@@ -125,7 +125,7 @@ export function getVirtuallyUser(data: { id: string }) {
 
 // 根据机构获取对应机构对应角色的用户
 export function getRoleUserListByOrg(data: { orgId?: string; role: string }) {
-  return http<UserInfoType[]>({
+  return http({
     url: `${PREFIX2}/users/query/role`,
     method: 'post',
     data

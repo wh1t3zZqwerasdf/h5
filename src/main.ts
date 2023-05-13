@@ -4,17 +4,35 @@ import App from './App.vue';
 import 'element-plus/theme-chalk/index.css';
 import ElementPlus from 'element-plus';
 import router from './router';
-import {createPinia} from 'pinia';
-import piniaPluginPersistedstate from 'pinia-plugin-persistedstate';
 import Vant, {Dialog, Toast} from 'vant';
+import vConsole from "@/vconsole";
+import 'qweather-icons/font/qweather-icons.css';
+/* pinia */
+import pinia from '@/store';
 import 'vant/lib/index.css';
+import 'virtual:windi.css';
 
-createApp(App)
-    .use(ElementPlus)
+
+const app = createApp(App);
+
+app.use(ElementPlus)
     .use(router)
-    // .use(vConsole as any)
-    .use(createPinia().use(piniaPluginPersistedstate))
+    .use(vConsole as any)
     .use(Vant)
+    .use(pinia)
     .use(Toast)
     .use(Dialog)
     .mount('#app');
+
+app.directive('debounce', {
+    beforeMount(el: any, binding: any) {
+        el.addEventListener('click', () => {
+            if (!el.disabled) {
+                el.disabled = true;
+                setTimeout(() => {
+                    el.disabled = false;
+                }, binding.value || 3 * 1000);
+            }
+        });
+    }
+});

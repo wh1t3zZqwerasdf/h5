@@ -36,6 +36,8 @@ export type QueryActivitiInfoTaskInfosType = {
 	color?: string;
 	tagColor?: string;
 	tagText?: string;
+	showTitle?:string;
+	formProps:any;
 	variableMap: { [key: string]: any };
 };
 

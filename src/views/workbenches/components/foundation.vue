@@ -12,7 +12,7 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import icon1 from '@/assets/images/desk/electricityBill-38.png'
 import icon2 from '@/assets/images/desk/hiddenDangerWarehouse-39.png'
 import icon3 from '@/assets/images/desk/externalBrokenWarehouse-29.png'
@@ -23,7 +23,7 @@ import icon7 from '@/assets/images/desk/annualPlan-32.png'
 import icon8 from '@/assets/images/desk/importantUsers-31.png'
 
 export default {
-  data () {
+  data() {
     return {
       icons: [
         { icon: icon1, text: '电力设施台账' },
@@ -38,7 +38,7 @@ export default {
     }
   },
   methods: {
-    goToDetailPage (item) {
+    goToDetailPage(item: any) {
       // this.$router.push({ path: '/detail', query: { id: item.id } })
       console.log(item);
     }

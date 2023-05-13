@@ -1,3 +1,4 @@
-import ProcessCardList from './processCard';
+import ProcessCardList from "./processCard";
+import ProcessDetails from "./processDetails";
 
-export { ProcessCardList };
+export { ProcessCardList, ProcessDetails };

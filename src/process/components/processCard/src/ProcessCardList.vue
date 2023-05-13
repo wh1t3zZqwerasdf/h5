@@ -1,13 +1,13 @@
 <template>
   <div class="process-card-list">
-    <div class="process-card-list-box" v-loading="loading">
-      <van-row class="content-start" :gutter="10" v-show="dataSource && dataSource.length">
+    <div v-loading="loading" class="process-card-list-box">
+      <van-row v-show="dataSource && dataSource.length" :gutter="10" class="content-start">
         <template v-for="(item, index) in dataSource" :key="index">
           <van-col class="card-item">
-            <ProcessCard :tableProps="tableProps" :dataSource="item">
+            <ProcessCard :dataSource="item" :tableProps="tableProps">
               <template #footer>
                 <div class="card-btns">
-                  <slot name="cardBtn" :data="item">
+                  <slot :data="item" name="cardBtn">
                   </slot>
                 </div>
               </template>
@@ -15,7 +15,7 @@
           </van-col>
         </template>
       </van-row>
-      <van-empty class="" v-show="!dataSource || !dataSource.length" description="暂无数据" />
+      <van-empty v-show="!dataSource || !dataSource.length" class="" description="暂无数据"/>
     </div>
     <div class="list-footer">
       <slot name="pagination"></slot>
@@ -25,7 +25,7 @@
 
 <script lang="ts" setup>
 import ProcessCard from './components/ProcessCard.vue';
-import { processCardListProps } from './props';
+import {processCardListProps} from './props';
 /* props */
 const props = defineProps(processCardListProps);
 
@@ -39,9 +39,11 @@ const props = defineProps(processCardListProps);
 /* watch */
 
 /* methods */
-function pageChange() { }
+function pageChange() {
+}
 
-onMounted(() => { });
+onMounted(() => {
+});
 </script>
 
 <style lang="less" scoped>
@@ -54,6 +56,7 @@ onMounted(() => { });
   }
 
   .card-item {
+    width: 100%;
     padding: 0 !important;
     height: calc((100% - 24px) / 3);
   }
@@ -63,7 +66,5 @@ onMounted(() => { });
   display: flex;
   justify-content: space-between;
   align-items: center;
-  // width: 50%;
-
 }
 </style>

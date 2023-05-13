@@ -12,7 +12,7 @@
   </div>
 </template>
 
-<script >
+<script lang="ts">
 import icon1 from '@/assets/images/desk/historicalCases-22.png'
 import icon2 from '@/assets/images/desk/popularizeVideo-21.png'
 import icon3 from '@/assets/images/desk/PPT-19.png'
@@ -23,7 +23,7 @@ import icon7 from '@/assets/images/desk/education-25.png'
 
 
 export default {
-  data () {
+  data() {
     return {
       icons: [
         { icon: icon1, text: '历史案例' },
@@ -38,7 +38,7 @@ export default {
     }
   },
   methods: {
-    goToDetailPage (item) {
+    goToDetailPage(item: any) {
       // this.$router.push({ path: '/detail', query: { id: item.id } })
       console.log(item);
     }

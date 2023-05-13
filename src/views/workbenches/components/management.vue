@@ -28,7 +28,7 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import icon1 from '@/assets/images/desk/news-2.png'
 import icon2 from '@/assets/images/desk/report-3.png'
 import icon3 from '@/assets/images/desk/consult-4.png'
@@ -38,7 +38,7 @@ import icon6 from '@/assets/images/desk/History-42.png'
 
 
 export default {
-  data () {
+  data() {
     return {
       show: false,
       popupTitle: '',
@@ -102,12 +102,12 @@ export default {
     //   this.popupTitle = item.text;
     //   this.activeItemId = item.id;
     // },
-    goToPage (item) {
+    goToPage(item: any) {
       // 使用 Vue Router 的 push 方法来跳转路由
       console.log(item, ' this.$router.push(item.path);');
       this.$router.push(item.path);
     },
-    openNewsPopup (item) {
+    openNewsPopup(item: any) {
       this.show = true;
       this.popupTitle = item.text;
       switch (item.id) {
@@ -133,7 +133,7 @@ export default {
     }
   },
   computed: {
-    activeItem () {
+    activeItem() {
       return this.moreNews.find(item => item.id === this.activeItemId);
     },
   }

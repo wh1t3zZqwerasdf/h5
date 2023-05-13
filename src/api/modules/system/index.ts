@@ -7,3 +7,6 @@ export * as permission from './permission.api';
 export * as auth from './auth.api';
 export * as news from './news.api';
 export * as hid from './hid.api';
+export * as activiti from './activiti.api';
+export * as exter from './exter.api';
+export * as city from './city.api';

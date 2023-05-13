@@ -1,13 +1,14 @@
 .bgc {
   position: absolute;
-  top: 0;
+  top: -25px;
   left: 0;
   width: 100%;
-  height: 188px;
+  height: 190px;
   background-image: url('@/assets/images/bgc-1.png');
   background-size: cover;
   background-repeat: no-repeat;
 }
+
 
 .container {
   display: flex;
@@ -15,29 +16,75 @@
   justify-content: space-between;
   padding: 5px;
   position: relative;
-  margin-top: 50px;
+  margin-top: 10px;
+  padding-top: 10px;
 }
+
+
 
 .container .title {
   width: 155px;
   height: 25px;
-  font-size: 20px;
+  font-size: 18px;
   font-family: 微软雅黑;
   color: #000000;
   line-height: 25px;
   font-weight: 700;
 }
 
+.container .head-image {
+  width: 46px;
+  height: 46px;
+  margin-left: 10px;
+  background: #D8D8D8;
+  border: 1px solid #FFFFFF;
+  border-radius: 50%;
+}
+
+
+.title-right {
+  display: flex;
+  align-items: center;
+}
+
+.right-weather {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  font-size: 12px;
+  line-height: 18px;
+  margin-right: 15px;
+  margin-left: 10px;
+  color: rgba(0, 0, 0, 0.8);
+}
+
+
+
+.title-iconDay {
+  /* font-size: 46px;
+  text-align: center;
+  line-height: 30px;
+  background: linear-gradient(to bottom, rgb(255, 220, 74) 10%, #fff 28%, #fff 68%, rgb(129, 213, 251));
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent; */
+  width: 46px;
+  height: 46px;
+}
+
 .icon {
-  width: 20px;
-  height: 18px;
+  width: 25px;
+  height: 25px;
   margin-right: 14px;
+  font-size: 30px;
+  margin-bottom: 15px;
 }
 
 .my-swipe {
   width: auto;
-  height: 200px;
-  margin: 0 15px 0 15px;
+  height: 220px;
+  margin: 0 15px;
+  margin-top: -10px;
 }
 
 .my-swipe img {
@@ -51,7 +98,6 @@
   font-size: 20px;
   line-height: 150px;
   text-align: center;
-  background-color: #39a9ed;
   margin-top: 20px;
 }
 
@@ -65,7 +111,7 @@
   height: 38px;
   display: flex;
   align-items: center;
-  margin-bottom: 28px;
+  /* margin-bottom: 15px; */
   margin-left: 15px;
   background-color: RGBA(225, 241, 254, 1);
   border-radius: 0px 0px 10px 10px;
@@ -78,21 +124,14 @@
   margin-left: 15px;
 }
 
-.news-image img {
+/* .news-image img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-}
-
-.news-span {
-  width: 1px;
-  height: 15px;
-  opacity: 0.3;
-  margin-right: 10px;
-}
+} */
 
 .news-text {
-  width: 224px;
+  width: 246px;
   height: 20px;
   font-family: 微软雅黑;
   text-align: left;
@@ -100,10 +139,13 @@
   overflow: hidden;
   text-overflow: ellipsis;
   margin-left: -8px;
-  margin-top: 6px;
+  margin-top: 2px;
   background-color: RGBA(225, 241, 254, 1);
 }
 
+.van-grid-item__content--center {
+  background: transparent;
+}
 
 .my-grid-item {
   display: flex;
@@ -115,50 +157,26 @@
   font-size: 14px;
   color: #333;
   text-align: center;
-  margin-bottom: 20px;
+  /* margin-bottom: 20px; */
 }
 
 .my-grid-item img {
-  width: 64px;
-  height: 64px;
+  width: auto;
+  height: auto;
 }
 
 .my-grid-item span {
   width: 56px;
   height: 20px;
   font-family: 微软雅黑;
-  font-weight: 700;
+  line-height: 20px;
+  color: #000000;
+  margin-top: 6px;
+  text-shadow: 2px 2px 4px RGBA(0, 0, 0, 0.1);
+  -webkit-font-smoothing: antialiased;
 }
 
 .today {
-  background-color: RGBA(243, 243, 243, 1);
   padding: 10px 0;
-}
-
-.today-content {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  margin-left: 15px;
-}
-
-.today-content div {
-  width: 80px;
-  height: 28px;
-  font-size: 20px;
-  font-family: 微软雅黑;
-  font-weight: 700;
-  color: #000000;
-  line-height: 28px;
-}
-
-.gradient-span {
-  width: 72px;
-  height: 5px;
-  background: linear-gradient(270deg, #F3F3F3 0%, #0060FF 100%);
-}
-
-.box-card {
-  margin-top: 10px;
-  margin-bottom: 10px;
+  height: auto;
 }

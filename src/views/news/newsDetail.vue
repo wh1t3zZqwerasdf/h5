@@ -1,13 +1,10 @@
-<script setup >
+<script setup lang="ts">
 import { onMounted, ref } from "vue";
-import Api_news from '@/http/http.ts'
+import api from '@/api'
 import { useRouter } from 'vue-router';
-
-
 const router = useRouter();
 const news = ref({});
 const onClickLeft = () => history.back();
-
 const sanitizeContent = (content) => {
   if (content) {
     return content.replace(/<img/g, '<img class="img-width"');
@@ -15,7 +12,6 @@ const sanitizeContent = (content) => {
     return '';
   }
 }
-
 const splitContent = (content) => {
   const imageRegex = /<img.*?src="(.*?)".*?>/g;
   const textRegex = /<p.*?>(.*?)<\/p>/g;
@@ -33,22 +29,20 @@ const splitContent = (content) => {
   }
   return { text, images };
 };
-
-
-
 onMounted(() => {
   const id = router.currentRoute.value.params.id
-  console.log(id, 'id');
-  Api_news.queryNewsList(id).then(res => {
+  console.log(id, 'id03');
+  api.news.queryNewsList(id).then(res => {
     news.value = res.data
   })
 })
 </script>
-
 <template>
   <div>
-    <van-nav-bar title="详情" left-text="" left-arrow @click-left="onClickLeft" safe-area-inset-top style="top: 26px;">
-    </van-nav-bar>
+    <van-sticky>
+      <van-nav-bar title="详情" left-text="" left-arrow @click-left="onClickLeft" safe-area-inset-top>
+      </van-nav-bar>
+    </van-sticky>
     <div class="news-detail">
       <div class="news-tag">
         <div class="news-title">{{ news.title }} <span>{{ '「' + {
@@ -75,5 +69,4 @@ onMounted(() => {
     </div>
   </div>
 </template>
-
 <style scoped src="./style/newsDetail.css"></style>

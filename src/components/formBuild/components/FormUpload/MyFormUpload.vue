@@ -1,35 +1,29 @@
 <template>
   <div class="uploadBox">
-    <van-uploader
-      v-model:model-value="fileList"
-      :after-read="afterRead"
-      v-if="isFile"
-      :disabled="disabledFlag"
-      :multiple="props.multiple"
-      :max-count="props.limit"
-      :before-read="beforeUpload"
-      :before-delete="beforeDelete"
-    >
+
+    <van-uploader v-model:model-value="fileList" :after-read="afterRead" v-if="isFile" :disabled="disabledFlag"
+      :multiple="props.multiple" :max-count="props.limit" :before-read="beforeUpload" :before-delete="beforeDelete">
       <div class="fileUpSpeal">附件上传</div>
     </van-uploader>
-    <van-uploader
-      v-model:model-value="fileList"
-      :after-read="afterRead"
-      v-if="!isFile"
-      :disabled="disabledFlag"
-      :multiple="props.multiple"
-      :max-count="props.limit"
-      :before-read="beforeUpload"
-      :before-delete="beforeDelete"
-    ></van-uploader>
+    <van-uploader v-model:model-value="fileList" :after-read="afterRead" v-if="!isFile" :disabled="disabledFlag"
+      :multiple="props.multiple" :max-count="props.limit" :before-read="beforeUpload"
+      :before-delete="beforeDelete"></van-uploader>
   </div>
 </template>
 
 <script lang="ts" setup>
 import api from "@/api/index";
-import type { UploadProps, UploadRawFile } from "element-plus";
 import { FormPropType, UploadResponse, UploadReturnType } from "@/types";
 import { useMessage } from "@/composables";
+import type {
+  UploadFile,
+  UploadFiles,
+  UploadProgressEvent,
+  UploadProps,
+  UploadRawFile,
+  UploadRequestOptions,
+  UploadUserFile
+} from 'element-plus';
 
 const {
   handleWarning,
@@ -42,6 +36,7 @@ const {
 const props = defineProps({
   modelValue: {
     type: Array as PropType<UploadResponse[] | string[]>,
+    default: []
   },
   itemProp: {
     type: Object as PropType<FormPropType>,
@@ -95,6 +90,7 @@ const ONLY_PHOTO_TIP = "只能上传图片";
 const emit = defineEmits<{
   (e: "update:modelValue", data: UploadResponse[] | string[]): void;
   (e: "upLoadArray", fileList: UploadResponse[], name: string): void;
+  (e: 'setDeleteFileId', data: string): string;
 }>();
 
 const disabledFlag = computed(() => {
@@ -103,6 +99,7 @@ const disabledFlag = computed(() => {
 
 const scopeData = computed<any>({
   get() {
+
     return props.modelValue;
   },
   set(data: UploadResponse[] | string[]) {
@@ -113,7 +110,7 @@ const scopeData = computed<any>({
 
 const fileList = computed({
   get() {
-    return scopeData.value;
+    return scopeData.value ? scopeData.value : [];
   },
   set(data: UploadResponse[] | string[]) {
     console.log(data);
@@ -138,13 +135,13 @@ const beforeUpload = (rawFile: any) => {
   const _accept = config.value?.accept?.length
     ? config.value?.accept
     : isFile.value
-    ? ACCEPT_FILE
-    : ACCEPT_PHOTO;
+      ? ACCEPT_FILE
+      : ACCEPT_PHOTO;
   const _tip = config.value?.tipText
     ? config.value?.tipText
     : isFile.value
-    ? ONLY_FILE_TIP
-    : ONLY_PHOTO_TIP;
+      ? ONLY_FILE_TIP
+      : ONLY_PHOTO_TIP;
   isAccept.value = _accept.includes(rawFile.type);
   const isLt2M = rawFile.size / 1024 / 1024 < 2;
 
@@ -155,10 +152,22 @@ const beforeUpload = (rawFile: any) => {
   return true;
 };
 
+function removeFileAndEmit(file: UploadFile) {
+  const { uid, url, response } = file;
+  const { objectName } = (response as { objectName: string }) || {};
+  emit('setDeleteFileId', objectName);
+}
+
 const beforeDelete = async (rawFile: any) => {
   let key = await handleDeleteConfirm("是否删除");
+  if (!key) return
+
+  removeFileAndEmit(rawFile);
   return key;
 };
+
+onMounted(() => {
+})
 </script>
 
 <style lang="less" scoped>
@@ -174,9 +183,12 @@ const beforeDelete = async (rawFile: any) => {
 
   :deep(.van-uploader) {
     width: 100%;
+    height: 88px;
+
     .van-uploader__wrapper {
       position: relative;
-      padding-top: 3rem;
+      // padding-top: 3rem;
+
       .van-uploader__input-wrapper {
         width: 100%;
         position: absolute;
@@ -185,6 +197,7 @@ const beforeDelete = async (rawFile: any) => {
       }
     }
   }
+
   .fileUpSpeal {
     width: 100%;
     height: 3rem;

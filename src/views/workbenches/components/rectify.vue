@@ -3,7 +3,7 @@
     <h3>整改库</h3>
     <van-grid :gutter="10" :border="false">
       <van-grid-item v-for="(item, index) in icons" :key="index" @click="goToDetailPage(item)">
-        <div class="icon-wrapper">
+        <div class="icon-wrapper123">
           <img :src="item.icon" class="icon" />
           <div class="text-pl text-icon1">{{ item.text }}</div>
         </div>
@@ -12,12 +12,12 @@
   </div>
 </template>
 
-<script >
+<script lang="ts">
 import icon1 from '@/assets/images/desk/Management-27.png'
 import icon2 from '@/assets/images/desk/researchManagement-30.png'
 
 export default {
-  data () {
+  data() {
     return {
       icons: [
         { icon: icon1, text: '保护区管理' },
@@ -26,7 +26,7 @@ export default {
     }
   },
   methods: {
-    goToDetailPage (item) {
+    goToDetailPage(item: any) {
       // this.$router.push({ path: '/detail', query: { id: item.id } })
       console.log(item);
     }
@@ -34,4 +34,4 @@ export default {
 }
 </script>
 
-<style src="../style/rectify.css"></style>
+<style src="../style/rectify.css" scoped></style>

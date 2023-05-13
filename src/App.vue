@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import AppJs from "@/utils/AppJs";
+import {getUserInfo} from "@/utils/AppJs";
 import {useSystemStore} from "@/store";
 
 const systemStore = useSystemStore()
@@ -15,9 +15,10 @@ const init = () => {
 }
 
 onMounted(() => {
-  AppJs.getUserInfo();
+  console.log('app');
+  getUserInfo();
   init()
-  console.log(localStorage.getItem('token'));
+  console.log('appvue', localStorage.getItem('token'));
 });
 </script>
 

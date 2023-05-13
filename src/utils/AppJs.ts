@@ -1,25 +1,29 @@
-import UserManager from '../utils/UserManager';
-import {UserType} from '../types/UserType';
+import pinia, {useAuthStore} from "@/store";
 
 const windowObj = window as any;
 let isReady = false;
 window.addEventListener('flutterInAppWebViewPlatformReady', function (event) {
+    console.log('isReady');
     isReady = true;
 });
 
 async function getUserInfo() {
     if (isReady) {
+        const authStore = useAuthStore(pinia);
         windowObj.flutter_inappwebview
             .callHandler('getUserInfo')
-            .then(function (result: UserType) {
-                UserManager.saveUserInfo(result);
+            .then(function (result: any) {
+                console.log('loginResult', result);
+                authStore.setOAuth(result)
+                console.log(result, 'result');
+                // UserManager.saveUserInfo(result);
             });
     } else {
         window.addEventListener(
             'flutterInAppWebViewPlatformReady',
             function (event) {
                 isReady = true;
-                UserManager.getUserInfo();
+                getUserInfo()
             }
         );
     }
@@ -80,7 +84,6 @@ async function logout(fn: Function) {
 //     Toast(e + "");
 //   }
 // };
-
 function closeJS() {
     // try {
     //   const type = targetPlatFormEnv;
@@ -99,7 +102,6 @@ function closeJS() {
         .then(function (result: string) {
             console.log('关闭JS2:' + result);
         });
-
     // window.addEventListener("flutterInAppWebViewPlatformReady", function (event) {
     //   console.log("关闭JS2");
     //   windowObj.flutter_inappwebview
@@ -110,4 +112,4 @@ function closeJS() {
     // });
 }
 
-export default {getUserInfo, closeJS, scan, logout};
+export {getUserInfo, closeJS, scan, logout};

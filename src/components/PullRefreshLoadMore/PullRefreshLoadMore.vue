@@ -1,6 +1,8 @@
 <template>
-  <van-pull-refresh v-model="refreshing" @refresh="onRefresh" loading-text="正在请求数据" success-text="数据刷新成功">
-    <van-list :loading="loading" @load="onLoad" :finished="finished" :offset="10" :immediate-check="false">
+  <van-pull-refresh v-model="refreshing" :disabled="openRefresh" loading-text="正在请求数据" success-text="数据刷新成功"
+                    @refresh="onRefresh">
+    <van-list :disabled="isEnd" :finished="isEnd" :immediate-check="false" :loading="loading" :offset="10"
+              @load="onLoad">
       <template #default>
         <slot></slot>
       </template>
@@ -8,10 +10,13 @@
   </van-pull-refresh>
 </template>
 
-<script setup lang="ts">
-import { ref, defineProps, defineEmits } from 'vue';
+<script lang="ts" setup>
 
 const props = defineProps({
+  pageNo: {
+    type: Number,
+    default: 1
+  },
   pageSize: {
     type: Number,
     default: 10
@@ -20,64 +25,53 @@ const props = defineProps({
     type: Number,
     default: 0
   },
-  dataSource: {
-    type: Array, // 修改类型为数组
-    default: () => []
+  loading: {
+    type: Boolean,
+    default: false
   },
-  loadings: {
+  // 是否开启下拉刷新
+  openRefresh: {
+    type: Boolean,
+    default: true
+  },
+  // 是否没有更多数据要加载，会禁用上拉加载更多
+  isEnd: {
     type: Boolean,
     default: false
   }
 });
 
-const emits = defineEmits(['loadList']);
-const pageNo = ref(1);
+const emits = defineEmits(['reLoad', 'update:pageNo']);
 const refreshing = ref(false);
-const loading = ref(false);
 const finished = ref(false);
 const total = ref(props.total);
 
+
+const _loading = computed(() => {
+  return props.loading
+})
+
 // 下拉刷新列表
 function onRefresh() {
-  pageNo.value = 1;
+  emits('update:pageNo', 1)
+  emits('reLoad')
   refreshing.value = true;
-  finished.value = false;
-  loadList();
+  finished.value = true;
 }
 
-//上拉加载下一页
+// 上拉加载下一页
 function onLoad() {
-  if (loading.value) {
-    return
-  }
-
-
-  if (pageNo.value < 10) {
-    pageNo.value++;
-    loading.value = true;
-    loadList();
-  }
+  if (props.loading && props.pageNo > 1) return
+  emits('update:pageNo', props.pageNo + 1)
+  emits('reLoad')
 }
 
-function loadList() {
-  try {
-    emits('loadList', {
-      pageNo: pageNo.value,
-      pageSize: props.pageSize,
-      total: props.total,
-    });
-    console.log(pageNo.value, props.pageSize, props.total, 'total');
 
-    // console.log(pageNo.value, props.pageSize, 'pageSizepageSize');
-
+watch(_loading, (val) => {
+  if (!val) {
     refreshing.value = false;
-    // loading.value = false;
-    return
-  } catch (error) {
-    console.error(error);
-    refreshing.value = false;
-    // loading.value = false;
   }
-}
+})
+
 
 </script>

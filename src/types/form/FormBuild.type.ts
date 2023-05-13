@@ -1,6 +1,6 @@
-import {AnyAndFn, BooleanAndFn, SelectOptionType} from './../constant.type';
+import {AnyAndFn, BooleanAndFn, SelectOptionType} from "./../constant.type";
 
-export type UploadReturnType = 'string' | 'fileObject';
+export type UploadReturnType = "string" | "fileObject";
 export type UploadType = {
     size: number;
     fileName: string;
@@ -17,6 +17,7 @@ export type PropType =
     | 'number-stepper' // 数字输入框
     | 'number-range' // 数字范围输入框
     | 'select' // 下拉框
+    | 'select-tag' // 标签选择
     | 'select-multiple' // 下拉框-多选
     // | "select-location" // 下拉框-位置
     | 'select-api' // 下拉框-远程
@@ -29,6 +30,7 @@ export type PropType =
     | 'checkbox-multiple' // 多选框
     | 'button' // 按钮
     | 'upload' // 上传
+    | "hidden"
     // | 'upload-phone' // 上传照片
     | 'upload-file' // 上传附件
     | 'date-picker' // 日期选择
@@ -47,6 +49,7 @@ export type FormPropType = {
     type: PropType;
 
     defaultValue?: AnyAndFn;
+    defaultValueLoad?: AnyAndFn;
     display?: BooleanAndFn;
     disabled?: BooleanAndFn;
     readonly?: BooleanAndFn;
@@ -71,12 +74,14 @@ export type FormPropType = {
     range?: { max?: number; min?: number };
     step?: number;
     precision?: number;
-    controlsPosition?: 'right';
+    controlsPosition?: "right";
 
     /* select */
     filterable?: boolean;
     options?: AnyAndFn<SelectOptionType[]>;
     search?: boolean;
+    apiSearch?: boolean;
+    apiSearchKey?: string;
     cascadeOptions?: any[];
     apiFn?: (params?: any) => any; // Promise<ApiResponse<T>>;
     apiParams?: { [key: string]: any } | any;
@@ -140,7 +145,7 @@ export type FormPropType = {
     /* tip */
     tip?: string;
 
-    checkLayout?: 'block' | 'inline-block';
+    checkLayout?: "block" | "inline-block";
 };
 export type FormPropGroupType = {
     name: string; // 用于分组 map 中的 key
@@ -155,17 +160,17 @@ export type FormPropGroupType = {
 
 export type OpStatus =
 // | "" // 空字符串
-    | 'search' // 搜索
-    | 'add' // 新增
-    | 'view' // 查看
-    | 'edit' // 编辑
-    | 'deal' // 处理
-    | 'delimit' // 划定
-    | 'import' // 导入
-    | 'draft' // 草稿
-    | 'check' // 检查
-    | 'review' // 审查 可编辑所有
-    | ''; // 留空
+    | "search" // 搜索
+    | "add" // 新增
+    | "view" // 查看
+    | "edit" // 编辑
+    | "deal" // 处理
+    | "delimit" // 划定
+    | "import" // 导入
+    | "draft" // 草稿
+    | "check" // 检查
+    | "review" // 审查 可编辑所有
+    | ""; // 留空
 
 export type FormOptionsType = {
     op?: OpStatus;

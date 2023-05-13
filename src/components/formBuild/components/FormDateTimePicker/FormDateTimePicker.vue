@@ -40,7 +40,7 @@
 <script lang="ts" setup>
 import {useDate, useFormNew} from '@/composables';
 import {FormConfigType, FormPropType} from '@/types';
-import {currDateArray} from "@/utils";
+import {currDateArray, getDateString} from "@/utils";
 import type {PickerGroupProps} from 'vant';
 import {PropType} from "vue";
 
@@ -75,10 +75,10 @@ const {isDisabled, getOptions, isReadonly, isRequired, setFormConfig} =
 
 const componentValue = computed<any>({
   get() {
-    return props.modelValue;
+    if (!props.modelValue) return props.modelValue
+    return getDateString(props.modelValue as unknown as Date, 'YYYY-MM-DD HH:mm');
   },
   set(data) {
-    console.log(data);
     // 异步触发自定义字段的表单校验
     emit('update:modelValue', data);
   }

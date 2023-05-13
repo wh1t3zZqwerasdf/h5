@@ -18,10 +18,11 @@
         dataSource[item.name]
       }}</span>
     </div>
-    <div class="process-footer">
-      <div v-if="dataSource.status">
-        <van-tag size="large" :type="_statusTagDictMap[dataSource.status].type">{{
-          _statusTagDictMap[dataSource.status].label }}
+    <div class="process-footer pt-10px">
+      <div v-if="dataSource.processStatus" class="flex-1">
+        <van-tag :type="_statusTagDictMap[dataSource.processStatus].type" plain size="large">{{
+          _statusTagDictMap[dataSource.processStatus].label
+        }}
         </van-tag>
       </div>
       <slot name="footer"></slot>
@@ -32,7 +33,6 @@
 <script lang="ts" setup>
 import { processCardProps } from '../props';
 import { daytimeFormat } from '@/utils';
-import { watchEffect } from 'vue'
 
 watchEffect(() => {
   // console.log('dataSource.processStatus:', [props.dataSource.status]);
@@ -58,33 +58,25 @@ const _otherField = computed(() => {
 const _statusTagDictMap = computed(() => {
   return {
     1: {
-      label: '草稿',
-      type: 'primary',
+      label: '审核中',
+      type: 'primary'
     },
     2: {
-      label: '电力设施产权人提报',
+      label: '已通过',
       type: 'success'
     },
     3: {
-      label: '执法办经办审核',
+      label: '已拒绝',
       type: 'danger'
     },
     4: {
-      label: '执法办负责人审核',
-      type: 'warning'
+      label: '已撤销',
+      type: 'info'
     },
     5: {
-      label: '执法办经办处置',
-      type: 'warning'
-    },
-    6: {
-      label: '电力设施产权人核实',
-      type: 'warning'
-    },
-    7: {
-      label: '归档',
-      type: 'warning'
-    },
+      label: '已超时',
+      type: 'danger'
+    }
   };
 });
 
@@ -99,7 +91,7 @@ function isDateField(name: string) {
 
 onMounted(() => {
   // console.log(_titleField.value.name);  //submitStr
-  // console.log(props.tableProps);
+  // console.log(props.dataSource, 'props.dataSource01');
 
 });
 
@@ -178,9 +170,11 @@ onMounted(() => {
 
 .process-footer {
   display: flex;
+  width: 100%;
+  height: 40px;
   justify-content: space-between;
-  height: 30px;
   align-items: center;
+  border-top: 1px solid var(--hy-border-color);
 }
 
 .process-card-tag-box {

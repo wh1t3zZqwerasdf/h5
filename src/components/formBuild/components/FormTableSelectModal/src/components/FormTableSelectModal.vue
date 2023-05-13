@@ -1,13 +1,13 @@
 <template>
   <span></span>
-  <el-dialog v-model="dialogVisible" top="5vh" :width="modalProps.width" destroy-on-close @close="handleCancelSelect">
-    <div class="table-dialog-body" :style="modalProps.dialogBodyStyle">
-      <div class="inline-block w-4/12" v-if="multiple">
-        <SelectDataList :keyProps="keyProps" :dataSource="selectData" @deleteItem="handleDeleteItem"></SelectDataList>
+  <el-dialog v-model="dialogVisible" :width="modalProps.width" destroy-on-close top="5vh" @close="handleCancelSelect">
+    <div :style="modalProps.dialogBodyStyle" class="table-dialog-body">
+      <div v-if="multiple" class="inline-block w-4/12">
+        <SelectDataList :dataSource="selectData" :keyProps="keyProps" @deleteItem="handleDeleteItem"></SelectDataList>
       </div>
-      <div class="inline-block" :class="multiple ? 'w-8/12' : 'w-12/12'">
-        <SearchTableByClass v-model:selectedDataIds="selectIds" v-model:selectedData="selectData"
-          v-bind="searchTableByDepProps"></SearchTableByClass>
+      <div :class="multiple ? 'w-8/12' : 'w-12/12'" class="inline-block">
+        <SearchTableByClass v-model:selectedData="selectData" v-model:selectedDataIds="selectIds"
+                            v-bind="searchTableByDepProps"></SearchTableByClass>
       </div>
     </div>
 
@@ -18,19 +18,18 @@
     <template #footer>
       <div class="p-10px select-footer">
         <el-button @click="handleCancelSelect">取消</el-button>
-        <el-button type="primary" @click="onSelect">确定 </el-button>
+        <el-button type="primary" @click="onSelect">确定</el-button>
       </div>
     </template>
   </el-dialog>
 </template>
 <script lang="ts" setup>
-import { useDialogNew } from '@/composables';
-import SearchTableByClass from '@/components/searchTableByClass';
+import {useDialogNew} from '@/composables';
+// import SearchTableByClass from '@/components/searchTableByClass';
 import SelectDataList from './SelectDataList.vue';
-import { formTableSelectModalProps } from '../props';
-import { computed } from 'vue';
-import type { ValueKey } from '../typing';
-import { OpStatus } from '@/types';
+import {formTableSelectModalProps} from '../props';
+import type {ValueKey} from '../typing';
+import {OpStatus} from '@/types';
 
 const props = defineProps(formTableSelectModalProps);
 const emits = defineEmits(['update:modelValue', 'initComp']);
@@ -53,7 +52,7 @@ const searchTableByDepProps = computed(() => {
   const _searchTableProps = Object.assign({}, props.searchTableProps);
   const apiParams = props.searchTableProps?.tableProps.apiParams;
   _searchTableProps.tableProps.defaultParams =
-    typeof apiParams === 'function' ? apiParams(props.formData) : apiParams;
+      typeof apiParams === 'function' ? apiParams(props.formData) : apiParams;
   return {
     searchTableProps: _searchTableProps,
     treeProps: props.treeProps,
@@ -68,6 +67,7 @@ const modalProps = computed(() => props.modalProps || {});
 function openDialog(op: OpStatus, data: any = {}) {
   dialogVisible.value = true;
 }
+
 const onSelect = () => {
   emits('update:modelValue', selectIds.value);
   emits('initComp', selectData.value);
@@ -96,7 +96,7 @@ const handleCancelSelect = () => {
 const handleDeleteItem = (value: ValueKey) => {
   selectIds.value = selectIds.value.filter((item: ValueKey) => item !== value);
   selectData.value = selectData.value.filter(
-    (item: any) => item[keyProps.value.valueKey] !== value
+      (item: any) => item[keyProps.value.valueKey] !== value
   );
 };
 
@@ -115,7 +115,7 @@ onMounted(async () => {
   emits('initComp', selectData.value);
 });
 
-defineExpose({ openDialog });
+defineExpose({openDialog});
 </script>
 
 <style lang="less" scoped>

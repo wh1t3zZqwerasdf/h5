@@ -18,7 +18,8 @@
       "@/*": ["src/*"],
       "~/*": ["public/*"]
     },
-    "types": ["vite/client", "element-plus/global", "vitest/globals"]
+    "types": ["vite/client", "element-plus/global", ]
+    // "vitest/globals"
   },
   "include": [
     "src/**/*.ts",

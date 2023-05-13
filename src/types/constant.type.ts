@@ -11,6 +11,7 @@ import type {
   ColSizeObject
 } from 'element-plus';
 import { RouteRecordRaw } from 'vue-router';
+import {  FormPropType } from '@/types';
 
 export const HTTP_STATUS = {};
 
@@ -166,3 +167,11 @@ export type NumberAndFn = AnyAndFn<number>;
 export type AnyAndFn<T = any> =
   | T
   | ((data: any, op?: OpStatus, other?: Record<string, any>) => T);
+
+
+  export type GroupSetType = {
+  dealSituation: string[];
+  dealWorkbench: string[];
+  fieldList: FormPropType[];
+  name: string;
+};

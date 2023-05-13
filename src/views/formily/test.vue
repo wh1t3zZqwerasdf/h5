@@ -1,6 +1,6 @@
 <template>
-  <FormBuild ref="formBuildRef" v-model="formData" :form-props-group="dialogPropsData"
-             :formConfig="{ op: op }"></FormBuild>
+  <FormBuild ref="formBuildRef" v-model="formData" :form-props-group="dialogPropsData" :formConfig="{ op: op }">
+  </FormBuild>
   <van-button block native-type="submit" round type="primary" @click="onSubmit">
     提交
   </van-button>
@@ -8,44 +8,123 @@
 
 <script lang="ts" setup>
 import api from '@/api';
-import {FormPropType} from '@/types'
+import { FormPropType } from '@/types'
 import FormBuild from '@/components/formBuild';
-import CustomTest from './customTest.vue'
-import {useSystemStore} from '@/store';
+import FormSearchSelect from '@/components/formBuild/components/FormSearchSelect'
+import { useAuthStore, useSystemStore } from '@/store';
 
 const systemStore = useSystemStore()
 const formData = reactive({})
 const op = ref('add')
 const formBuildRef = ref()
+
+const authStore = useAuthStore()
 console.log(systemStore.dict);
+
+
+const tableSelectProps = {
+  multiple: false,
+  searchTableProps: {
+    searchProps: {
+      formProps: reactive<FormPropType[]>([
+        {
+          name: 'name',
+          label: '线路名称',
+          type: 'text',
+          layoutProps: {
+            span: 23
+          }
+        },
+        {
+          name: 'deviceType',
+          label: '设备类型',
+          type: 'select',
+          options: (data, op) => {
+            return systemStore.dict.protection_type;
+          }
+        },
+        {
+          name: 'propertyOrg',
+          label: '运维单位',
+          type: 'text'
+        }
+      ])
+    },
+    tableProps: {
+      title: '数据列表',
+      columns: [{
+        name: 'name',
+        label: '线路名称',
+        type: 'text',
+        layoutProps: {
+          span: 23
+        }
+      }],
+      apiFn: api.protect.facilityQueryList,
+      apiParams: {
+        roles: authStore.userRoles,
+        district:
+          authStore.userOrg?.id === '241457306124951552'
+            ? ''
+            : authStore.userOrg?.id
+      }
+    }
+  },
+  modalProps: {
+    width: '60%',
+    title: '选择线路'
+  },
+  defaultValueLoad: async (val: string) => {
+    if (!val || !val.length) return;
+
+    const { code, data } = await api.protect.facilityQueryInfo({
+      id: val[0]
+    });
+    return [data];
+  },
+  keyProps: {
+    valueKey: 'id',
+    labelKey: 'name'
+  }
+};
+
 const dialogProps = reactive<FormPropType[]>([
   {
     name: 'text',
     label: '文本输入',
     type: 'text',
     required: true,
-    rules: [{required: true}]
+    rules: [{ required: true }]
+  },
+  {
+    name: 'custom',
+    label: '线路选择',
+    type: 'custom',
+    customComponent: markRaw(FormSearchSelect),
+    customProps: tableSelectProps,
+    required: true,
+    rules: [{ required: true }],
   },
   {
     name: 'number',
     label: '数字输入',
     type: 'number',
     required: true,
-    rules: [{required: true}, {max: 100, message: '最多输入36个字符'}]
+    rules: [{ required: true }, { max: 100, message: '最多输入36个字符' }]
   },
   {
     name: 'password',
     label: '密码输入',
     type: 'password',
     required: true,
-    rules: [{required: true}, {max: 100, message: '最多输入100个字符'}]
+    rules: [{ required: true }, { max: 100, message: '最多输入100个字符' }]
   },
   {
     name: 'textarea',
     label: '文本域输入',
     type: 'textarea',
     required: true,
-    rules: [{required: true}, {max: 100, message: '最多输入100个字符'}]
+    rules: [{ required: true }, { max: 100, message: '最多输入100个字符' }]
   },
   {
     name: 'select',
@@ -54,8 +133,32 @@ const dialogProps = reactive<FormPropType[]>([
     required: true,
     options: (data, op) => {
       return [
-        {label: 'vvvv111', value: '222'}
+        { label: 'vvvv111', value: '222' }
       ]
+    },
+    defaultValue: 0
+  },
+  {
+    name: 'tagSelect',
+    label: '标签选择',
+    type: 'select-tag',
+    required: true,
+    mult: true,
+    apiFn: api.users.usersFilter,
+    apiParams: (data: any) => {
+      return {
+        size: 100,
+        organizationPath: data.path
+      };
+    },
+    apiCbFn: data => {
+      return data.rows.map((item: any) => {
+        return {
+          label: item.name,
+          value: item.id,
+          phone: item.phone
+        };
+      });
     },
     defaultValue: 0
   },
@@ -66,9 +169,9 @@ const dialogProps = reactive<FormPropType[]>([
     required: true,
     options: (data, op) => {
       return [
-        {label: 'yes', value: 1},
+        { label: 'yes', value: 1 },
 
-        {label: 'no', value: 0}
+        { label: 'no', value: 0 }
       ]
     },
     defaultValue: 0
@@ -80,12 +183,12 @@ const dialogProps = reactive<FormPropType[]>([
     required: true,
     options: (data, op) => {
       return [
-        {label: '选项1', value: 1},
-        {label: '选项2', value: 2},
-        {label: '选项3', value: 3},
+        { label: '选项1', value: '1' },
+        { label: '选项2', value: '2' },
+        { label: '选项3', value: '3' },
       ]
     },
-    defaultValue: 1
+    defaultValue: '1'
   },
   {
     name: 'date',
@@ -126,12 +229,6 @@ const dialogProps = reactive<FormPropType[]>([
     }
   },
   {
-    name: 'custom',
-    label: '自定义组件',
-    type: 'custom',
-    customComponent: markRaw(CustomTest)
-  },
-  {
     name: 'img',
     label: '图片上传',
     type: 'upload',
@@ -139,7 +236,7 @@ const dialogProps = reactive<FormPropType[]>([
   {
     name: 'file',
     label: '文件上传',
-    type: 'upload-file',
+    type: 'upload',
   },
   {
     name: 'case-select',
@@ -190,7 +287,7 @@ const dialogProps = reactive<FormPropType[]>([
             label: '数组文本',
             type: 'text',
             required: true,
-            rules: [{required: true}]
+            rules: [{ required: true }]
           }
         ]
       }
@@ -212,7 +309,7 @@ const setApiData = () => {
     formData.password = '222'
     formData.textarea = 'textarea'
     formData.radio = 1
-    formData.checkbox = [1]
+    formData.checkbox = '1,2'
     formData.date = '2023-04-26 00:00:00'
     formData.datetime = '2023-04-26 00:00:00'
     formData.dateRangeStartTime = '2023-04-26 00:00:00'
@@ -220,7 +317,8 @@ const setApiData = () => {
     formData.selectApi = '2'
     formData.hiddenTroubleType = "85708563472731137"
     formData.hiddenTroubleTypeArrName = 'xxx/xx/xx'
-    formData.arrayUserTask = [{arrayText: ''}, {}]
+    formData.arrayUserTask = [{ arrayText: '' }, {}]
+    formData.custom = '493511877117098772'
     // op.value = 'view'
   }, 2000)
 }

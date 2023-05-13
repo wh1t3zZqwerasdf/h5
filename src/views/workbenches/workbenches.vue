@@ -1,8 +1,8 @@
 <template>
   <div>
-    <div class="work-title">
-      <span>工作台</span>
-    </div>
+    <van-sticky>
+      <van-nav-bar title="工作台" />
+    </van-sticky>
   </div>
   <div class="word-center">
     <management></management>
@@ -14,7 +14,7 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import management from './components/management.vue'
 import meetings from './components/meetings.vue'
 import popularizeLaw from './components/popularizeLaw.vue'
@@ -34,26 +34,10 @@ export default {
 </script>
 
 <style>
-.work-title {
-  width: 100%;
-  margin-top: 40px;
-  margin-bottom: 14px;
-}
-
-.work-title span {
-  width: 54px;
-  height: 18px;
-  font-size: 18px;
-  font-family: 微软雅黑;
-  font-weight: 400;
-  color: #000000;
-  line-height: 27px;
-}
-
 .word-center {
   background-color: RGBA(243, 243, 243, 1);
   width: 100%;
-  height: 1500px;
+  /* height: 1500px; */
   padding: 10px 0 0 0;
 }
 </style>

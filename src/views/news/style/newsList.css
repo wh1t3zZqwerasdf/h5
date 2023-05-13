@@ -1,5 +1,5 @@
 .news_header {
-  height: 94px;
+  height: 56px;
   background:linear-gradient(#fff 0%, #fff 60%, #F3F3F3 100%);
 }
 
@@ -12,7 +12,7 @@
   width: 100%;
   height: 50px;
   /* padding: 10px 0;  */
-  padding-top: 36px;
+  /* padding-top: 36px; */
 }
 
 :deep(.news-search) {
@@ -81,6 +81,7 @@
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2;
   overflow: hidden;
+  color: #000000;
 }
 
 
@@ -107,6 +108,7 @@
   -webkit-line-clamp: 2;
   overflow: hidden;
   margin-right: 6px;
+  color: #000000;
 }
 
 .tag-item {
@@ -150,7 +152,7 @@
   flex-wrap: wrap;
   font-size: 14px;
   line-height: 20px;
-  color:#9a9a9a ;
+  color:#0c0c0c ;
 }
 
 

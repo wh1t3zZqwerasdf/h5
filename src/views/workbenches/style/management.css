@@ -1,22 +1,15 @@
-.van-popup--top{
-  top: 26px;
-}
-
 .one-center {
   display: flex;
-  align-items: flex-start;
+  /* align-items: flex-start; */
   flex-direction: column;
   width: 100%;
   height: auto;
   background: #FFFFFF;
-  /* margin-top: 10px; */
 }
 
 .one-center h3 {
-  width: 80px;
-  height: 28px;
-  margin-left: 15px;
-  margin-top: 15px;
+  padding: 15px;
+  font-weight: 700;
 }
 
 
@@ -35,9 +28,9 @@
 }
 
 .icon-wrapper .text {
-  width: 64px;
+  width: auto;
   height: 22px;
-  font-size: 16px;
+  font-size: 12px;
   font-family: 微软雅黑;
   color: #000000;
   line-height: 22px;

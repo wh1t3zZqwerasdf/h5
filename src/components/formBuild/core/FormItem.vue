@@ -1,110 +1,79 @@
 <template>
   <van-col v-show="prop.type !== 'hidden'" class="form-item-col" v-bind="layoutProps">
     <!--    文本输入-->
-    <van-field
-        v-if="['text', 'password', 'textarea'].includes(prop.type)"
-        v-model.trim="scopeData[prop.name]"
-        :class="['form-item', `form-item-${prop.type}`]"
-        :disabled="isDisabled(prop, scopeData, config)"
-        :label="!prop.hiddenLabel && prop.label"
-        :name="prop.name"
-        :placeholder="prop.placeholder ?? setPlaceholder(prop)"
-        :readonly="isReadonly(prop, scopeData, config)"
-        :required="isRequired(prop, scopeData, config)"
-        :rules="prop.rules?.map((rule:any) => {
-          if (rule.required) {
-            rule.message = rule.message || `${prop.label}不能为空`;
-          }
-          return rule
-        })"
-        :type="prop.type"
-        clearable
-    />
+    <van-field v-if="['text', 'password', 'textarea'].includes(prop.type)" v-model.trim="scopeData[prop.name]"
+      :class="['form-item', `form-item-${prop.type}`]" :disabled="isDisabled(prop, scopeData, config)"
+      :label="!prop.hiddenLabel && prop.label" :name="prop.name" :placeholder="prop.placeholder ?? setPlaceholder(prop)"
+      :readonly="isReadonly(prop, scopeData, config)" :required="isRequired(prop, scopeData, config)" :rules="prop.rules?.map((rule: any) => {
+        if (rule.required) {
+          rule.message = rule.message || `${prop.label}不能为空`;
+        }
+        return rule
+      })" :type="prop.type" clearable />
 
     <!--    数字输入-->
-    <van-field
-        v-else-if="['number'].includes(prop.type)"
-        v-model.number="scopeData[prop.name]"
-        :class="['form-item', `form-item-${prop.type}`]"
-        :disabled="isDisabled(prop, scopeData, config)"
-        :label="!prop.hiddenLabel && prop.label"
-        :name="prop.name"
-        :placeholder="prop.placeholder ?? setPlaceholder(prop)"
-        :readonly="isReadonly(prop, scopeData, config)"
-        :required="isRequired(prop, scopeData, config)"
-        :rules="prop.rules?.map((rule:any) => {
-          if (rule.required) {
-            rule.message = rule.message || `${prop.label}不能为空`;
-          }
-          return rule
-        })"
-        clearable
-        type="number"
-    />
+    <van-field v-else-if="['number'].includes(prop.type)" v-model.number="scopeData[prop.name]"
+      :class="['form-item', `form-item-${prop.type}`]" :disabled="isDisabled(prop, scopeData, config)"
+      :label="!prop.hiddenLabel && prop.label" :name="prop.name" :placeholder="prop.placeholder ?? setPlaceholder(prop)"
+      :readonly="isReadonly(prop, scopeData, config)" :required="isRequired(prop, scopeData, config)" :rules="prop.rules?.map((rule: any) => {
+        if (rule.required) {
+          rule.message = rule.message || `${prop.label}不能为空`;
+        }
+        return rule
+      })" clearable type="number" />
 
     <!--    选择器-->
     <template v-else-if="['select'].includes(prop.type)">
       <FormSelect v-model="scopeData[prop.name]" :config="config" :disabled="isDisabled(prop, scopeData, config)"
-                  :prop="prop"
-                  :scopeData="scopeData"/>
+        :prop="prop" :scopeData="scopeData" />
+    </template>
+
+    <!--    标签选择-->
+    <template v-else-if="['select-tag'].includes(prop.type)">
+      <FormTagSelect v-model="scopeData[prop.name]" :config="config" :disabled="isDisabled(prop, scopeData, config)"
+        :prop="prop" :scopeData="scopeData" />
     </template>
 
     <!--   级联选择-->
     <template v-else-if="['select-api-cascade'].includes(prop.type)">
-      <FormCascaderSelect v-model="scopeData[prop.name]" :config="config"
-                          :disabled="isDisabled(prop, scopeData, config)" :prop="prop"
-                          :scopeData="scopeData" @setCascaderArrName="setCascaderArrName"/>
+      <FormCascaderSelect v-model="scopeData[prop.name]" :config="config" :disabled="isDisabled(prop, scopeData, config)"
+        :prop="prop" :scopeData="scopeData" @setCascaderArrName="setCascaderArrName" />
     </template>
 
     <!--    日期选择-->
     <template v-else-if="['date-picker'].includes(prop.type)">
       <FormDatePicker v-model="scopeData[prop.name]" :config="config" :disabled="isDisabled(prop, scopeData, config)"
-                      :prop="prop"
-                      :scopeData="scopeData"/>
+        :prop="prop" :scopeData="scopeData" />
     </template>
 
     <!--    日期时间选择-->
     <template v-else-if="['datetime-picker'].includes(prop.type)">
-      <FormDateTimePicker v-model="scopeData[prop.name]" :config="config"
-                          :disabled="isDisabled(prop, scopeData, config)" :prop="prop"
-                          :scopeData="scopeData"/>
+      <FormDateTimePicker v-model="scopeData[prop.name]" :config="config" :disabled="isDisabled(prop, scopeData, config)"
+        :prop="prop" :scopeData="scopeData" />
     </template>
 
     <!--    日期区间-->
     <template v-else-if="['daterange-picker'].includes(prop.type)">
-      <FormDateRangePicker v-model="scopeData[prop.name]" :config="config"
-                           :disabled="isDisabled(prop, scopeData, config)" :prop="prop"
-                           :scopeData="scopeData" @setDateRangeData="setDateRangeData"/>
+      <FormDateRangePicker v-model="scopeData[prop.name]" :config="config" :disabled="isDisabled(prop, scopeData, config)"
+        :prop="prop" :scopeData="scopeData" @setDateRangeData="setDateRangeData" />
     </template>
 
     <!-- 单选框 -->
     <template v-else-if="prop.type === 'radio'">
-      <van-field
-          v-model.number="scopeData[prop.name]"
-          :class="['form-item', `form-item-${prop.type}`]"
-          :disabled="isDisabled(prop, scopeData, config)"
-          :label="!prop.hiddenLabel && prop.label"
-          :name="prop.name"
-          :placeholder="prop.placeholder ?? setPlaceholder(prop)"
-          :readonly="isReadonly(prop, scopeData, config)"
-          :required="isRequired(prop, scopeData, config)"
-          :rules="prop.rules?.map((rule:any) => {
-      if (rule.required) {
-        rule.message = rule.message || `${prop.label}不能为空`;
-      }
-      return rule
-    })"
-          clearable
-      >
+      <van-field v-model.number="scopeData[prop.name]" :class="['form-item', `form-item-${prop.type}`]"
+        :disabled="isDisabled(prop, scopeData, config)" :label="!prop.hiddenLabel && prop.label" :name="prop.name"
+        :placeholder="prop.placeholder ?? setPlaceholder(prop)" :readonly="isReadonly(prop, scopeData, config)"
+        :required="isRequired(prop, scopeData, config)" :rules="prop.rules?.map((rule: any) => {
+          if (rule.required) {
+            rule.message = rule.message || `${prop.label}不能为空`;
+          }
+          return rule
+        })" clearable>
         <template #input>
           <van-radio-group v-model="scopeData[prop.name]" :disabled="isDisabled(prop, scopeData, config)"
-                           direction="horizontal">
-            <van-radio
-                v-for="option in getOptions(prop, scopeData, config)"
-                :disabled="option.disabled"
-                :label="option.value"
-                :name="option.value"
-            >
+            direction="horizontal">
+            <van-radio v-for="option in getOptions(prop, scopeData, config)" :disabled="option.disabled"
+              :label="option.value" :name="option.value">
               {{ option.label }}
             </van-radio>
           </van-radio-group>
@@ -114,63 +83,34 @@
 
     <!-- 复选框 -->
     <template v-else-if="prop.type === 'checkbox'">
-      <van-field
-          :class="['form-item', `form-item-${prop.type}`]"
-          :disabled="isDisabled(prop, scopeData, config)"
-          :label="!prop.hiddenLabel && prop.label"
-          :name="prop.name"
-          :placeholder="prop.placeholder ?? setPlaceholder(prop)"
-          :readonly="isReadonly(prop, scopeData, config)"
-          :required="isRequired(prop, scopeData, config)"
-          :rules="prop.rules?.map((rule:any) => {
-      if (rule.required) {
-        rule.message = rule.message || `${prop.label}不能为空`;
-      }
-      return rule
-    })"
-          clearable
-      >
+      <van-field :class="['form-item', `form-item-${prop.type}`]" :disabled="isDisabled(prop, scopeData, config)"
+        :label="!prop.hiddenLabel && prop.label" :name="prop.name" :placeholder="prop.placeholder ?? setPlaceholder(prop)"
+        :readonly="isReadonly(prop, scopeData, config)" :required="isRequired(prop, scopeData, config)" :rules="prop.rules?.map((rule: any) => {
+          if (rule.required) {
+            rule.message = rule.message || `${prop.label}不能为空`;
+          }
+          return rule
+        })" clearable shape="square">
         <template #input>
-          <van-checkbox-group v-model="scopeData[prop.name]" :disabled="isDisabled(prop, scopeData, config)"
-                              direction="horizontal">
-            <van-checkbox
-                v-for="option in getOptions(prop, scopeData, config)"
-                :disabled="option.disabled"
-                :label="option.value"
-                :name="option.value"
-            >
-              {{ option.label }}
-            </van-checkbox>
-          </van-checkbox-group>
+          <FormCheckbox v-model="scopeData[prop.name]" :config="config" :disabled="isDisabled(prop, scopeData, config)"
+            :prop="prop" :scopeData="scopeData" />
         </template>
       </van-field>
     </template>
 
     <!--数组卡片-->
     <template v-else-if="prop.type === 'arrayCard'">
-      <van-field
-          :class="['form-item', `form-item-${prop.type}`]"
-          :disabled="isDisabled(prop, scopeData, config)"
-          :label="!prop.hiddenLabel && prop.label"
-          :name="prop.name"
-          :placeholder="prop.placeholder ?? setPlaceholder(prop)"
-          :readonly="isReadonly(prop, scopeData, config)"
-          :required="isRequired(prop, scopeData, config)"
-          :rules="prop.rules?.map((rule:any) => {
+      <van-field :class="['form-item', `form-item-${prop.type}`]" :disabled="isDisabled(prop, scopeData, config)"
+        :label="!prop.hiddenLabel && prop.label" :name="prop.name" :placeholder="prop.placeholder ?? setPlaceholder(prop)"
+        :readonly="isReadonly(prop, scopeData, config)" :required="isRequired(prop, scopeData, config)" :rules="prop.rules?.map((rule: any) => {
           if (rule.required) {
             rule.message = rule.message || `${prop.label}不能为空`;
           }
           return rule
-        })"
-          clearable
-      >
+        })" clearable>
         <template #input>
-          <FormArrayCard
-              v-model="scopeData[prop.name]"
-              :disabled="isDisabled(prop, scopeData, config)"
-              :formConfig="config"
-              :itemProp="prop"
-          />
+          <FormArrayCard v-model="scopeData[prop.name]" :disabled="isDisabled(prop, scopeData, config)"
+            :formConfig="config" :itemProp="prop" />
         </template>
       </van-field>
     </template>
@@ -178,80 +118,63 @@
 
     <!-- 自定义组件 -->
     <template v-else-if="prop.type === 'custom'">
-      <van-field
-          :class="['form-item', `form-item-${prop.type}`]"
-          :disabled="isDisabled(prop, scopeData, config)"
-          :label="!prop.hiddenLabel && prop.label"
-          :name="prop.name"
-          :placeholder="prop.placeholder ?? setPlaceholder(prop)"
-          :readonly="isReadonly(prop, scopeData, config)"
-          :required="isRequired(prop, scopeData, config)"
-          :rules="prop.rules?.map((rule:any) => {
+      <van-field :class="['form-item', `form-item-${prop.type}`]" :disabled="isDisabled(prop, scopeData, config)"
+        :label="!prop.hiddenLabel && prop.label" :name="prop.name" :placeholder="prop.placeholder ?? setPlaceholder(prop)"
+        :readonly="isReadonly(prop, scopeData, config)" :required="isRequired(prop, scopeData, config)" :rules="prop.rules?.map((rule: any) => {
           if (rule.required) {
             rule.message = rule.message || `${prop.label}不能为空`;
           }
           return rule
-        })"
-          clearable
-      >
+        })" :value="scopeData[prop.name]" clearable>
         <template #input>
-          <FormCustom
-              v-model="scopeData[prop.name]"
-              :disabled="isDisabled(prop, scopeData, config)"
-              :formConfig="config"
-              :formData="scopeData"
-              :formRef="formRef"
-              :itemProp="prop"
-              :placeholder="prop.placeholder"
-          ></FormCustom>
+          <FormCustom v-model="scopeData[prop.name]" :disabled="isDisabled(prop, scopeData, config)" :formConfig="config"
+            :formData="scopeData" :formRef="formRef" :itemProp="prop" :placeholder="prop.placeholder"></FormCustom>
         </template>
       </van-field>
     </template>
 
     <template v-else-if="prop.type.includes('upload')">
-      <van-field
-          :class="['form-item', `form-item-${prop.type}`]"
-          :disabled="isDisabled(prop, scopeData, config)"
-          :label="!prop.hiddenLabel && prop.label"
-          :name="prop.name"
-          :placeholder="prop.placeholder ?? setPlaceholder(prop)"
-          :readonly="isReadonly(prop, scopeData, config)"
-          :required="isRequired(prop, scopeData, config)"
-          :rules="prop.rules?.map((rule:any) => {
-      if (rule.required) {
-        rule.message = rule.message || `${prop.label}不能为空`;
-      }
-      return rule
-    })"
-          clearable
-      >
+      <van-field :class="['form-item', `form-item-${prop.type}`]" :disabled="isDisabled(prop, scopeData, config)"
+        :label="!prop.hiddenLabel && prop.label" :name="prop.name" :placeholder="prop.placeholder ?? setPlaceholder(prop)"
+        :readonly="isReadonly(prop, scopeData, config)" :required="isRequired(prop, scopeData, config)" :rules="prop.rules?.map((rule: any) => {
+          if (rule.required) {
+            rule.message = rule.message || `${prop.label}不能为空`;
+          }
+          return rule
+        })" clearable @setDeleteFileId="setDeleteFileId">
         <template #input>
-          <MyFormUpload
-              v-model="scopeData[prop.name]"
-              :disabled="isDisabled(prop, scopeData, config)"
-              :itemProp="prop"
-              :label="!prop.hiddenLabel && prop.label"
-              @upLoadArray="setUpload"
-          >
+          <MyFormUpload v-model="scopeData[prop.name]" :disabled="isDisabled(prop, scopeData, config)" :itemProp="prop"
+            :label="!prop.hiddenLabel && prop.label" @upLoadArray="setUpload">
           </MyFormUpload>
         </template>
       </van-field>
     </template>
+    <template v-else-if="prop.type.startsWith('hidden')">
+      <van-field v-model="scopeData[prop.name]" type="hidden" />
+    </template>
+    <template v-else>
+      <van-field v-model.trim="scopeData[prop.name]" :class="['form-item', `form-item-${prop.type}`]"
+        :disabled="isDisabled(prop, scopeData, config)" :label="!prop.hiddenLabel && prop.label"
+        :placeholder="prop.placeholder ?? 'TODO ' + prop.type" clearable />
+    </template>
+    <div class="tip-box van-ellipsis">{{ prop.tip }}</div>
   </van-col>
 </template>
 
 <script lang="ts" setup>
-import {useFormNew} from "@/composables";
-import {useSystemStore} from "@/store";
-import type {FormConfigType, FormPropType, UploadType} from "@/types";
-import {retainNumber} from "@/utils";
+import { useFormNew } from "@/composables";
+import { useSystemStore } from "@/store";
+import type { FormConfigType, FormPropType, UploadType } from "@/types";
+import { retainNumber } from "@/utils";
 import FormSelect from "../components/FormSelect";
 import FormCustom from "../components/FormCustom";
 import FormDatePicker from "../components/FormDatePicker";
 import FormDateTimePicker from "../components/FormDateTimePicker";
 import FormDateRangePicker from "../components/FormDateRangePicker";
+import FormCheckbox from "../components/FormChekbox";
 import FormCascaderSelect from "../components/FormCascaderSelect"
 import FormArrayCard from '../components/FormArrayCard'
+import FormTagSelect from '../components/FormTagSelect'
 import MyFormUpload from "../components/FormUpload/MyFormUpload.vue";
 
 const systemStore = useSystemStore();
@@ -262,7 +185,7 @@ const prop = computed<any>(() => props.itemProp);
 
 // 栅格布局参数
 const layoutProps = computed<any>(() => {
-  const {layoutProps, type} = prop.value;
+  const { layoutProps, type } = prop.value;
   let defaultSpan = 24;
   if (["upload", "upload-file", "textarea"].includes(type)) defaultSpan = 24;
   else if (["daterange-picker"].includes(type)) defaultSpan = 24;
@@ -308,9 +231,9 @@ const scopeData = computed<any>({
     if (props.itemProp.type.includes("upload")) {
       Object.keys(props.modelValue).map((key) => {
         if (
-            props.modelValue[key] &&
-            key === props.itemProp.name &&
-            typeof props.modelValue[key] === "string"
+          props.modelValue[key] &&
+          key === props.itemProp.name &&
+          typeof props.modelValue[key] === "string"
         )
           props.modelValue[key] = JSON.parse(props.modelValue[key] as string);
       });
@@ -341,8 +264,8 @@ const config = computed(() => {
   return props.formConfig;
 });
 
-const {isDisabled, getOptions, isReadonly, isRequired, setFormConfig} =
-    useFormNew(props.formConfig);
+const { isDisabled, getOptions, isReadonly, isRequired, setFormConfig } =
+  useFormNew(props.formConfig);
 
 /* ========== 数字输入框特殊限制 ========== */
 const numberChannelInputLimit = (e: any) => {
@@ -447,8 +370,8 @@ async function handleSelectApi(item: FormPropType) {
   }
   if (item.apiFn === undefined) return;
   let params = Array.isArray(item.apiParams)
-      ? [...item.apiParams]
-      : item.apiParams;
+    ? [...item.apiParams]
+    : item.apiParams;
   if (typeof item.apiParams === "function")
     params = item.apiParams(scopeData.value);
   console.log(params);
@@ -475,12 +398,12 @@ function setSelectApiFilterData(item: FormPropType) {
   selectApiData.value = item.options;
   console.log("-----------------------");
   console.log(
-      "---------- selectApiOptionName.value-------------",
-      selectApiOptionName.value
+    "---------- selectApiOptionName.value-------------",
+    selectApiOptionName.value
   );
   console.log(
-      "---------- selectApiData.value-------------",
-      selectApiData.value
+    "---------- selectApiData.value-------------",
+    selectApiData.value
   );
   // 获取当前ID的值构建数组
   selectApiOptionsList.value = selectApiData.value.filter((item: any) => {
@@ -570,8 +493,8 @@ function seCaseCadeDefaultValue(item: FormPropType) {
 function radioClick(value: string | number, name: string) {
   if (props.formConfig.disabled) return;
   scopeData.value[name] === value
-      ? (scopeData.value[name] = "")
-      : (scopeData.value[name] = value);
+    ? (scopeData.value[name] = "")
+    : (scopeData.value[name] = value);
 }
 
 // #endregion
@@ -583,8 +506,8 @@ async function handleSelectCascadeApi(item: FormPropType) {
   if (item.cascadeOptions?.length) return; // 已请求
   if (item.apiFn === undefined) return;
   let params = Array.isArray(item.apiParams)
-      ? [...item.apiParams]
-      : [item.apiParams];
+    ? [...item.apiParams]
+    : [item.apiParams];
   if (typeof item.apiParams === "function")
     params = item.apiParams(scopeData.value);
 
@@ -637,7 +560,7 @@ function remoteMethod(query: string) {
   if (query !== "") {
     setTimeout(() => {
       selectApiData_.value = selectApiData.value.map((item: any) => {
-        return {value: `${item?.value}`, label: `${item?.label}`};
+        return { value: `${item?.value}`, label: `${item?.label}` };
       });
       selectApiOptionsList.value = selectApiData_.value.filter((item: any) => {
         return item?.label.indexOf(query) > -1;
@@ -658,19 +581,19 @@ const optionsArray = computed(() => {
 });
 
 watch(
-    () => scopeData.value,
-    (val) => {
-      if (prop.value.alias) {
-        const _name = prop.value.name;
-        const _alias = prop.value.alias;
-        val[_alias] = val[_name];
-      }
-      // 动态设置默认值
-      setDynamicDefaultValue(props.itemProp, val);
-    },
-    {
-      deep: true,
+  () => scopeData.value,
+  (val) => {
+    if (prop.value.alias) {
+      const _name = prop.value.name;
+      const _alias = prop.value.alias;
+      val[_alias] = val[_name];
     }
+    // 动态设置默认值
+    setDynamicDefaultValue(props.itemProp, val);
+  },
+  {
+    deep: true,
+  }
 );
 
 
@@ -694,6 +617,12 @@ onMounted(() => {
       font-size: var(--hy-xs-text-size);
       color: var(--hy-placeholder-text-color);
     }
+  }
+
+  .tip-box {
+    padding-left: 10px;
+    font-size: var(--hy-xs-text-size);
+    color: #999;
   }
 }
 </style>

@@ -6,13 +6,17 @@
   "scripts": {
     "dev": "vite",
     "dev:hwd": "vite --host --port 10100 --mode lanHwd",
+    "dev:cq": "vite --host --port 10100 --mode lanCq",
     "production": "vite --mode production",
-    "build": "vue-tsc --noEmit && vite build",
+    "build": "vite build",
+    "build:test": "vite build --mode test",
     "preview": "vite preview",
+    "tsc": "vue-tsc --noEmit",
     "lint": "eslint src/*"
   },
   "dependencies": {
     "@element-plus/icons-vue": "^2.0.10",
+    "@vant/use": "^1.5.1",
     "async-validator": "4.2.5",
     "axios": "^0.27.2",
     "dayjs": "1.11.5",
@@ -25,6 +29,7 @@
     "pinia": "^2.0.22",
     "pinia-plugin-persistedstate": "^1.6.3",
     "prettier": "^2.8.7",
+    "qweather-icons": "^1.3.1",
     "unplugin-vue-components": "^0.24.1",
     "vconsole": "^3.15.0",
     "vue": "^3.2.47",
@@ -48,6 +53,8 @@
     "vant": "^4.1.2",
     "vite": "^3.2.5",
     "vite-plugin-style-import": "^1.4.1",
-    "vue-tsc": "^0.40.13"
+    "vite-plugin-windicss": "^1.8.8",
+    "vue-tsc": "^0.40.13",
+    "windicss": "^3.5.6"
   }
 }

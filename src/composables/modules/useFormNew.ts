@@ -13,7 +13,7 @@ import _ from 'lodash';
 
 export const FORM_CONFIG: FormConfigType = {
     inline: false,
-    labelWidth: '124px',
+    labelWidth: "124px",
     disabled: false,
 };
 
@@ -48,13 +48,13 @@ export function useFormNew(config?: FormConfigType) {
         cbName: ValidateCbNameType;
         cbParams: any;
     }>({
-        cbName: 'submit',
+        cbName: "submit",
         cbParams: {},
     });
 
     function validateRender(fnName?: ValidateCbNameType, params?: any) {
         validateFlag.value = true;
-        validateConfig.value.cbName = fnName || 'submit';
+        validateConfig.value.cbName = fnName || "submit";
         validateConfig.value.cbParams = params ?? {};
     }
 
@@ -63,6 +63,7 @@ export function useFormNew(config?: FormConfigType) {
         if (formEl) formInstance.value = formEl;
         // 先清除验证信息
         formEl.resetValidation();
+
         try {
             await formEl.validate()
             return true
@@ -147,6 +148,7 @@ export function useFormNew(config?: FormConfigType) {
         return rules;
     }
 
+
     /* 执行验证 */
     function handleValidator(
         data: any,
@@ -177,7 +179,7 @@ export function useFormNew(config?: FormConfigType) {
     ) {
         if (options?.op === undefined) return list;
 
-        if (['search'].includes(options.op)) return list;
+        if (["search"].includes(options.op)) return list;
         if (Array.isArray(list)) {
             return list.filter((item: FormPropType) => {
                 const flag = isDisplay(item, data, options);
@@ -197,8 +199,10 @@ export function useFormNew(config?: FormConfigType) {
         data: any,
         options?: FormOptionsType
     ) {
+        // console.log(data, options,list,'liost');
+        
         if (options?.op === undefined) return list;
-        if (['', 'search'].includes(options.op)) return list;
+        if (["", "search"].includes(options.op)) return list;
         return list
             .filter((item: FormPropGroupType) => {
                 const flag = isDisplay(item, data, options);
@@ -227,7 +231,7 @@ export function useFormNew(config?: FormConfigType) {
     ) {
         if (options?.op === undefined) return list;
 
-        if (['', 'search'].includes(options.op)) return list;
+        if (["", "search"].includes(options.op)) return list;
 
         return list
             .filter((item: FormPropGroupType) => {
@@ -273,7 +277,7 @@ export function useFormNew(config?: FormConfigType) {
         if (formConfig.value.disabled) return formConfig.value.disabled;
         // 判断单项是否禁用
         if (item.disabled === undefined) return false;
-        if (typeof item.disabled === 'boolean') return item.disabled;
+        if (typeof item.disabled === "boolean") return item.disabled;
         return item.disabled(data, options?.op);
     }
 
@@ -284,13 +288,13 @@ export function useFormNew(config?: FormConfigType) {
         options?: FormOptionsType
     ) {
         if (item.display === undefined) return true;
-        if (typeof item.display === 'boolean') return item.display;
+        if (typeof item.display === "boolean") return item.display;
 
         // 这边是用于多组配置项目的处理 需要两个字段进行适配处理
         // if (item.dynamic && item.showPropKey) {
         if (item.showPropKey) {
             let name = item.name as string;
-            let index: number = name.indexOf('_');
+            let index: number = name.indexOf("_");
             if (index > 0) {
                 let data_count = name.slice(index, name.length);
                 // 获取是否显示时依赖的字段 如installType_2 installType_3
@@ -313,7 +317,7 @@ export function useFormNew(config?: FormConfigType) {
         options?: FormOptionsType
     ) {
         if (item.readonly === undefined) return false;
-        if (typeof item.readonly === 'boolean') return item.readonly;
+        if (typeof item.readonly === "boolean") return item.readonly;
         return item.readonly(data, options?.op);
     }
 
@@ -324,7 +328,7 @@ export function useFormNew(config?: FormConfigType) {
         options?: FormOptionsType
     ) {
         if (item.required === undefined) return false;
-        if (typeof item.required === 'boolean') return item.required;
+        if (typeof item.required === "boolean") return item.required;
         return item.required(data, options?.op);
     }
 
@@ -334,7 +338,7 @@ export function useFormNew(config?: FormConfigType) {
         options?: FormOptionsType
     ): SelectOptionType[] {
         if (item.options === undefined) return [];
-        if (typeof item.options === 'function')
+        if (typeof item.options === "function")
             return item.options(data, options?.op);
 
         return item.options;
@@ -353,10 +357,10 @@ export function useFormNew(config?: FormConfigType) {
     /* 过滤字段 */
     function filterData(data: any, props?: FormPropType[]) {
         if (!props) {
-            if (Object.hasOwn(data, 'createTime')) delete data.createTime;
-            if (Object.hasOwn(data, 'createBy')) delete data.createBy;
-            if (Object.hasOwn(data, 'updateTime')) delete data.updateTime;
-            if (Object.hasOwn(data, 'updateBy')) delete data.updateBy;
+            if (Object.prototype.hasOwnProperty.call(data, "createTime")) delete data.createTime;
+            if (Object.prototype.hasOwnProperty.call(data, "createBy")) delete data.createBy;
+            if (Object.prototype.hasOwnProperty.call(data, "updateTime")) delete data.updateTime;
+            if (Object.prototype.hasOwnProperty.call(data, "updateBy")) delete data.updateBy;
         }
         return data;
     }
